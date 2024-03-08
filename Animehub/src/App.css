@@ -1,0 +1,140 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  padding-top: 100px;
+  background-color: #121221 !important;
+  color: white !important;
+}
+.navbar{
+  margin-left: 3% ;
+  margin-right: 3%;
+}
+.logo{
+  width: 50px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+.nav-link{
+  color: white !important;
+}
+.search{
+  background-color: #242447 !important;
+  border: none;
+  color: white !important;
+}
+::placeholder {
+  padding-left: 5px;
+  color: #9494C7;
+  opacity: 1;
+}
+
+.sec1{
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+.image{
+  height: 400px;
+  background-image: url("j.png")!important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.center-container {
+  display: flex  !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 80vh;
+}
+.login-container {
+  width: 300px !important;
+  margin: 0 auto !important;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  margin-bottom: 3%;
+  height: 60px;
+}
+
+input::placeholder {
+  color: #9494C7 !important;
+}
+
+.text-white {
+  font-size: 20px;
+}
+h3{
+  font-size: 40px !important;
+  padding-bottom: 3%;
+}
+.categorysection{
+  max-width: 60%;
+}
+.category{
+  height: fit-content;
+  width: 100px;
+  background-color: #242447 !important;
+  border: none;
+  color: #9494C7 !important;
+  border-radius: 5px;
+}
+@media screen and (max-width: 576px) {
+      .categorysection{
+          max-width: 100% !important;
+      }
+
+  }
+  @media screen and (max-width: 1200px) {
+      .categorysection{
+          max-width: 70%;
+      }
+  }
+  @media screen and (max-width:994px) {
+      .categorysection{
+          max-width: 100%;
+      }
+  }
+  .animatedcard::before{
+    position: absolute;
+    content: '';
+    width: 70%;
+    height: 180%;
+    background: #9494C7;
+    transform: rotate(45deg);
+  }
+  .animatedcard{
+    background-color: #242447 !important;
+    display: grid;
+    place-items:  center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  .animatedcard:hover::before{
+    animation: animate 3s linear infinite;
+  }
+  @keyframes animate {
+    from{
+      transform: rotate(0deg);
+
+    }
+    to{
+      transform: rotate(360deg);
+    }
+  }
+  .animatedcard::after{
+    position: absolute;
+    content: '';
+    inset: 5px;
+    background-color: #121221;
+    border-radius: 8px;
+  }
+  .card-item{
+    z-index: 2;
+  }
+  .img-thumbnail {
+    background-color: #9494C7 !important;
+ }
