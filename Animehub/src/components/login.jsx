@@ -1,4 +1,13 @@
+import React, { useState } from 'react';
 export default function Login() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Submitted:', username, password);
+    };
+
     return(
         <>
         <nav className="navbar navbar-expand-lg fixed-top" style={{ backgroundColor: '#121221' }}>
@@ -31,14 +40,14 @@ export default function Login() {
             <div id="login-row" className="row justify-content-center align-items-center">
               <div id="login-column" className="col-md-6">
                 <div id="login-box" className="col-md-12">
-                  <form id="login-form" className="form" action="" method="post">
+                  <form id="login-form" className="form" action=""  onSubmit={handleSubmit}>
                     <div className="form-group">
                       <label htmlFor="username" className="text-white">Username:</label><br />
-                      <input type="text" name="username" id="username" className="form-control border-0 search" placeholder="Enter your username" />
+                      <input type="text" name="username" id="username" className="form-control border-0 search" placeholder="Enter your username" onChange={(e) => setUsername(e.target.value)}  />
                     </div>
                     <div className="form-group">
                       <label htmlFor="password" className="text-white">Password:</label><br />
-                      <input type="password" name="password" id="password" className="form-control border-0 search" placeholder="Enter your password" />
+                      <input type="password" name="password" id="password" className="form-control border-0 search" placeholder="Enter your password"  onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div className="form-group">
                       <span><input id="remember-me" name="remember-me" type="checkbox" /></span><label htmlFor="remember-me" className="text-white"><span style={{ marginLeft: '10px' }}>Remember me</span> </label><br />

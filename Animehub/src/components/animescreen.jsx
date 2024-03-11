@@ -1,4 +1,4 @@
-  
+  import React from "react";
 export default function AnimeDetails() {
   return (
     <div>
@@ -38,7 +38,7 @@ export default function AnimeDetails() {
                 <strong>Name: Naruto</strong>
                 <br />Genre: Action, Comedy, Drama, Fantasy
                 <hr />
-                <br />Description: .....................
+                <br />Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus totam ab odit laboriosam sequi. Rem fugit nesciunt eveniet aut iusto, temporibus corporis. Animi beatae doloribus laboriosam, architecto accusantium facere consequuntur!
               </p>
             </div>
           </div>

@@ -1,3 +1,5 @@
+import React from "react"
+
 export default function Home() {
     return (
         <>
@@ -37,7 +39,7 @@ export default function Home() {
                 <strong>Name: Jujutsu Kaisen </strong>
                 <br />Genre : Action , Comedy , Drama , Fantasy
                 <hr />
-                <br />Description : .....................
+                <br />Description : Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi consequatur accusamus ducimus? Beatae enim aliquam, minima iste doloribus commodi sequi minus reiciendis voluptas voluptates, dolore perspiciatis. Eligendi sequi corporis dignissimos.
               </p>
             </div>
           </div>
