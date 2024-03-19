@@ -1,9 +1,15 @@
 const express = require("express");
 const route = express.Router();
-const { createHomeAnimes } = require("../controllers/animeControllers");
-route.get("/animes/homeimages", async (req, res) => {
-  res.json("hello");
-});
-module.exports = route;
+const {
+  createHomeAnimes,
 
-route.post("/animes/add", createHomeAnimes);
+  getAnimes,
+  createCategory,
+  getCategories,
+} = require("../controllers/animeControllers");
+
+module.exports = route;
+route.get("/get/categories", getCategories);
+route.post("/add/anime", createHomeAnimes);
+route.get("/get/animes", getAnimes);
+route.post("/add/category", createCategory);

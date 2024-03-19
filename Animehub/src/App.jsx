@@ -1,65 +1,62 @@
-import react from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'bootstrap/dist/js/bootstrap.min.js';
-import './App.css';
-import Home from './components/home';
-import Animes from './components/animes';
-import Login from './components/login';
-import Register from './components/register';
-import Animescreen from './components/animescreen';
-import Profilepicture from './components/profilepicture';
-import Account from './components/Account';
-import Favoriteanimes from './components/favoriteanime';
-import ChangeEmail from './components/changeemail';
-import ChangePassword from './components/changepassword';
-import ChangeUsername from './components/changeusername';
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/js/bootstrap.min.js";
+import "./App.css";
+import Home from "./components/home";
+import Animes from "./components/animes";
+import Login from "./components/login";
+import Register from "./components/register";
+import Animescreen from "./components/animescreen";
+import Profilepicture from "./components/profilepicture";
+import Account from "./components/Account";
+import Favoriteanimes from "./components/favoriteanime";
+import ChangeEmail from "./components/changeemail";
+import ChangePassword from "./components/changepassword";
+import ChangeUsername from "./components/changeusername";
+import NotFound from "./components/notFound";
 function App() {
-  let component
+  let component;
   switch (window.location.pathname) {
     case "/":
-      component = <Home/>
-    break
+      component = <Home />;
+      break;
     case "/index":
-      component = <Home/>
-    break
+      component = <Home />;
+      break;
     case "/Animes":
-      component = <Animes />
-    break
+      component = <Animes />;
+      break;
     case "/login":
-      component = <Login />
-    break
+      component = <Login />;
+      break;
     case "/register":
-      component = <Register />
-    break
+      component = <Register />;
+      break;
     case "/Animescreen":
       component = <Animescreen />;
-    break
+      break;
     case "/profilepicture":
-      component = <Profilepicture/>;
-    break
+      component = <Profilepicture />;
+      break;
     case "/account":
-      component = <Account/>;
-    break
+      component = <Account />;
+      break;
     case "/changeemail":
-      component = <ChangeEmail/>;
-    break
+      component = <ChangeEmail />;
+      break;
     case "/changepassword":
-      component = <ChangePassword/>;
-    break
+      component = <ChangePassword />;
+      break;
     case "/changeusername":
-      component = <ChangeUsername/>;
-    break
+      component = <ChangeUsername />;
+      break;
     case "/favoriteanimes":
-      component = <Favoriteanimes/>;
-    break
+      component = <Favoriteanimes />;
+      break;
+    default:
+      component = <NotFound></NotFound>;
   }
-  return (
-    <>
-      {component}
-    </>
-  )
+  return <>{component}</>;
 }
 
-export default App
+export default App;

@@ -1,45 +1,57 @@
-import React from "react"
+import React, { useEffect, useState } from "react";
+import { useAnimeContext } from "../hooks/useAnimeContext";
+import axios from "axios";
+import Header from "./header";
 
 export default function Home() {
-    return (
-        <>
-      <nav className="navbar navbar-expand-lg fixed-top" style={{ backgroundColor: '#121221' }}>
-        <div className="container-fluid">
-          <a className="navbar-brand nav-link" href="#"><img className="logo" src="shop3.png" alt="" />Animehub</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
+  const [error, setError] = useState();
+  const { animes, dispatch } = useAnimeContext();
+
+  useEffect(() => {
+    const fetchAnimes = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/get/animes");
+
+        dispatch({ type: "GET_ANIMES", payload: response.data });
+      } catch (err) {
+        console.log(err);
+        setError("failed to fetch data");
+      }
+    };
+    fetchAnimes();
+  }, [dispatch]);
+
+  return (
+    <>
+      <Header>
+        <form className="d-flex" role="search">
+          <input
+            className=" rounded me-2 search"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button type="submit" className="btn btn-primary">
+            Browse
           </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="Animes">Animes</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link active" href="login" aria-disabled="true">Account</a>
-              </li>
-            </ul>
-            <form className="d-flex" role="search">
-              <input className=" rounded me-2 search" type="search" placeholder="Search" aria-label="Search" disabled />
-              <button type="submit" className="btn btn-primary" disabled>Browse</button>
-            </form>
-          </div>
-        </div>
-      </nav>
+        </form>
+      </Header>
       <div className="container">
         <h1>Welcome on Animehub</h1>
         <section className="sec1">
           <div className="row">
-            <div className="col-md-2-6 col-sm-6 image">
-            </div>
+            <div className="col-md-2-6 col-sm-6 image"></div>
             <div className="col-md-2-6 col-sm-6">
               <p>
                 <strong>Name: Jujutsu Kaisen </strong>
-                <br />Genre : Action , Comedy , Drama , Fantasy
-                <hr />
-                <br />Description : Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi consequatur accusamus ducimus? Beatae enim aliquam, minima iste doloribus commodi sequi minus reiciendis voluptas voluptates, dolore perspiciatis. Eligendi sequi corporis dignissimos.
+                <br />
+                Genre : Action , Comedy , Drama , Fantasy
+                <br />
+                Description : Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. Excepturi consequatur accusamus ducimus? Beatae enim
+                aliquam, minima iste doloribus commodi sequi minus reiciendis
+                voluptas voluptates, dolore perspiciatis. Eligendi sequi
+                corporis dignissimos.
               </p>
             </div>
           </div>
@@ -49,12 +61,20 @@ export default function Home() {
         <section className="sec1">
           <h1 className="mb-5">Anime Series</h1>
           <div className="row justify-content-center">
-            {[1, 2, 3, 4, 5].map(card => (
+            {[1, 2, 3, 4, 5].map((card) => (
               <div key={card} className="col-md-2 col-sm-4 col-6">
                 <div className="card text-center bg-transparent border-0">
                   <div className="card-body animatedcard m-2">
-                    <a className="card-item" href="Animescreen"><img src="MiConv.com__Fullmetal Alchemist Brotherhood.png" className="card-item rounded img-fluid" alt="Card Image" /></a>
-                    <h5 className="card-item card-title text-white mt-3">Card {card}</h5>
+                    <a className="card-item" href="Animescreen">
+                      <img
+                        src="MiConv.com__Fullmetal Alchemist Brotherhood.png"
+                        className="card-item rounded img-fluid"
+                        alt="Card Image"
+                      />
+                    </a>
+                    <h5 className="card-item card-title text-white mt-3">
+                      Card {card}
+                    </h5>
                   </div>
                 </div>
               </div>
@@ -63,6 +83,5 @@ export default function Home() {
         </section>
       </div>
     </>
-    )
-  }
-  
+  );
+}
