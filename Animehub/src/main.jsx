@@ -5,9 +5,7 @@ import "./index.css";
 import { AnimeContextProvider } from "./context/animeContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <AnimeContextProvider>
-      <App />
-    </AnimeContextProvider>
-  </React.StrictMode>
+  <AnimeContextProvider>
+    <App />
+  </AnimeContextProvider>
 );

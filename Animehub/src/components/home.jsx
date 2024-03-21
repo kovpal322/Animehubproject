@@ -1,57 +1,45 @@
-import React, { useEffect, useState } from "react";
 import { useAnimeContext } from "../hooks/useAnimeContext";
-import axios from "axios";
+
 import Header from "./header";
 
 export default function Home() {
-  const [error, setError] = useState();
-  const { animes, dispatch } = useAnimeContext();
+  const { animes } = useAnimeContext();
 
-  useEffect(() => {
-    const fetchAnimes = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/get/animes");
-
-        dispatch({ type: "GET_ANIMES", payload: response.data });
-      } catch (err) {
-        console.log(err);
-        setError("failed to fetch data");
-      }
-    };
-    fetchAnimes();
-  }, [dispatch]);
+  const randomIndex = Math.floor(Math.random() * animes.length);
 
   return (
     <>
       <Header>
-        <form className="d-flex" role="search">
-          <input
-            className=" rounded me-2 search"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button type="submit" className="btn btn-primary">
-            Browse
-          </button>
-        </form>
+        <a href="/login" className="btn btn-primary">
+          login
+        </a>
+        <a href="/register" className="btn btn-primary">
+          register
+        </a>
       </Header>
       <div className="container">
         <h1>Welcome on Animehub</h1>
         <section className="sec1">
           <div className="row">
-            <div className="col-md-2-6 col-sm-6 image"></div>
+            <div
+              className="col-md-2-6 col-sm-6 image "
+              style={{
+                backgroundImage: `url(${
+                  animes.length && animes[randomIndex].homeimage
+                })`,
+              }}
+            ></div>
             <div className="col-md-2-6 col-sm-6">
               <p>
-                <strong>Name: Jujutsu Kaisen </strong>
+                <strong>{animes.length && animes[randomIndex].title} </strong>
                 <br />
-                Genre : Action , Comedy , Drama , Fantasy
+                Genre :
+                {animes.length &&
+                  animes[randomIndex].categories.map((item) => {
+                    return <span key={item._id}> {item.name} </span>;
+                  })}
                 <br />
-                Description : Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Excepturi consequatur accusamus ducimus? Beatae enim
-                aliquam, minima iste doloribus commodi sequi minus reiciendis
-                voluptas voluptates, dolore perspiciatis. Eligendi sequi
-                corporis dignissimos.
+                Description : {animes.length && animes[randomIndex].desc}
               </p>
             </div>
           </div>
@@ -61,24 +49,27 @@ export default function Home() {
         <section className="sec1">
           <h1 className="mb-5">Anime Series</h1>
           <div className="row justify-content-center">
-            {[1, 2, 3, 4, 5].map((card) => (
-              <div key={card} className="col-md-2 col-sm-4 col-6">
-                <div className="card text-center bg-transparent border-0">
-                  <div className="card-body animatedcard m-2">
-                    <a className="card-item" href="Animescreen">
-                      <img
-                        src="MiConv.com__Fullmetal Alchemist Brotherhood.png"
-                        className="card-item rounded img-fluid"
-                        alt="Card Image"
-                      />
-                    </a>
-                    <h5 className="card-item card-title text-white mt-3">
-                      Card {card}
-                    </h5>
+            {animes
+              .reverse()
+              .slice(0, 5)
+              .map((card) => (
+                <div key={card._id} className="col-md-2 col-sm-4 col-6">
+                  <div className="card text-center bg-transparent border-0">
+                    <div className="card-body animatedcard m-2">
+                      <a className="card-item" href="Animescreen">
+                        <img
+                          src={card.imagepath}
+                          className="card-item rounded img-fluid"
+                          alt={card.title}
+                        />
+                      </a>
+                      <h5 className="card-item card-title text-white mt-3">
+                        {card.title}
+                      </h5>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </section>
       </div>

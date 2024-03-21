@@ -1,6 +1,15 @@
 import React from "react";
 import Header from "./header";
+
+import { useAnimeContext } from "../hooks/useAnimeContext";
+import { useParams } from "react-router-dom";
 export default function AnimeDetails() {
+  const { animes } = useAnimeContext();
+
+  const params = useParams();
+
+  const singleAnime = animes.find((anime) => anime._id == params.id);
+
   return (
     <div>
       <Header></Header>
@@ -9,23 +18,21 @@ export default function AnimeDetails() {
           <div className="row">
             <div className="col-md-2-6 col-sm-6">
               <img
-                src="https://drive.google.com/file/d/1jkDsfCoRYANWUSvq0NQTWR05SgRlOMHA/view?raw=true"
+                src={singleAnime && singleAnime.imagepath}
                 className="rounded img-fluid"
                 alt="Animeimage"
               />
             </div>
             <div className="col-md-2-6 col-sm-6">
               <p>
-                <strong>Name: Naruto</strong>
+                <strong>Name: {singleAnime && singleAnime.title}</strong>
                 <br />
-                Genre: Action, Comedy, Drama, Fantasy
-                <hr />
+                {singleAnime &&
+                  singleAnime.categories.map((item, index) => {
+                    return <span key={index}> {item.name} </span>;
+                  })}
                 <br />
-                Description: Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit. Possimus totam ab odit laboriosam sequi. Rem fugit
-                nesciunt eveniet aut iusto, temporibus corporis. Animi beatae
-                doloribus laboriosam, architecto accusantium facere
-                consequuntur!
+                Description:{singleAnime && singleAnime.desc}
               </p>
             </div>
           </div>

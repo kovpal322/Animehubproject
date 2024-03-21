@@ -6,7 +6,7 @@ const Header = ({ children }) => {
         style={{ backgroundColor: "#121221" }}
       >
         <div className="container-fluid">
-          <a className="navbar-brand nav-link" href="#">
+          <a className="navbar-brand nav-link" href="/">
             <img className="logo" src="shop3.png" alt="" />
             Animehub
           </a>
@@ -24,19 +24,19 @@ const Header = ({ children }) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="index">
+                <a className="nav-link active" aria-current="page" href="/">
                   Home
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="Animes">
+                <a className="nav-link" href="/animes">
                   Animes
                 </a>
               </li>
               <li className="nav-item">
                 <a
                   className="nav-link active"
-                  href="login"
+                  href="/account"
                   aria-disabled="true"
                 >
                   Account

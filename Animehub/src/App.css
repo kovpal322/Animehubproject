@@ -36,7 +36,7 @@ body {
 }
 .image {
   height: 400px;
-  background-image: url("j.png") !important;
+
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
