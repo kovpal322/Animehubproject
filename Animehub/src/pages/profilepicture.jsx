@@ -1,10 +1,15 @@
-import React from "react";
-import Header from "./header";
+
+import Header from "../components/header.jsx";
+import {useUserContext} from "../hooks/useUserContext.jsx";
+import LogoutButton from "../components/LogoutButton.jsx";
 
 export default function Profilepicture() {
+  const {user}=useUserContext()
   return (
     <div>
-      <Header></Header>
+      <Header>{
+        user&&<LogoutButton></LogoutButton>
+      }</Header>
       <div className="container">
         <div id="carouselExample" className="carousel slide">
           <div className="carousel-inner">

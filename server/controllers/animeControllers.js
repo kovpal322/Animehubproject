@@ -1,6 +1,7 @@
 const animeSchema = require("../models/animemodel");
 const studioSchema = require("../models/studiomodel");
 const categorySchema = require("../models/categoryModel");
+
 const createHomeAnimes = async (req, res) => {
   try {
     const anime = await animeSchema.create({ ...req.body });
@@ -21,6 +22,7 @@ const createCategory = async (req, res) => {
 };
 
 const getAnimes = async (req, res) => {
+  const { q } = req.query;
   try {
     const animes = await animeSchema.aggregate([
       {
@@ -40,7 +42,14 @@ const getAnimes = async (req, res) => {
         },
       },
     ]);
-    res.json(animes);
+
+    res.json(
+      q.length > 2
+        ? animes.filter((item) =>
+            item.title.toLowerCase().includes(q.toLowerCase())
+          )
+        : animes
+    );
   } catch (err) {
     res.json(err);
   }
@@ -55,4 +64,10 @@ const getCategories = async (req, res) => {
     res.status(500).json(err);
   }
 };
-module.exports = { createHomeAnimes, createCategory, getAnimes, getCategories };
+
+module.exports = {
+  createHomeAnimes,
+  createCategory,
+  getAnimes,
+  getCategories,
+};

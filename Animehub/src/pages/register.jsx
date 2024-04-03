@@ -1,17 +1,47 @@
-import React, { useState } from "react";
-import Header from "./header";
+import { useState } from "react";
+import Header from "../components/header.jsx";
+import { useUserContext } from "../hooks/useUserContext.jsx";
+
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState(null);
+  const [checked, setChecked] = useState(false);
   const [confirmPassword, setconfirmPassword] = useState("");
-
-  const handleSubmit = (e) => {
+  const { dispatch } = useUserContext();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      console.log("Submitted:", username, password, email);
+
+    if (checked) {
+      if (password === confirmPassword) {
+        const response = await fetch("http://localhost:4000/signup", {
+          method: "POST",
+          body: JSON.stringify({ email, password, username }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          setError(data.error);
+        }
+
+        if (response.ok) {
+          dispatch({ type: "LOGIN_USER", payload: data });
+          localStorage.setItem("user", JSON.stringify(data));
+          window.location.assign("/");
+          setError("");
+          setPassword("");
+          setUsername("");
+          setChecked(false);
+          setconfirmPassword("");
+        }
+      } else {
+        setError("passwords do not match");
+      }
     } else {
-      alert("Passwords do not match!");
+      setError("you must accept the terms of service and privacy policy");
     }
   };
 
@@ -94,18 +124,15 @@ export default function Register() {
                     />
                   </div>
                   <div className="form-group">
-                    <span>
+                    <label htmlFor="terms">
+                      I agree to the terms of service and privacy policy
                       <input
-                        id="remember-me"
-                        name="remember-me"
                         type="checkbox"
+                        style={{ marginLeft: "10px" }}
+                        onChange={() => setChecked((prevVal) => !prevVal)}
                       />
-                    </span>
-                    <label htmlFor="remember-me" className="text-white">
-                      <span style={{ marginLeft: "10px" }}>
-                        I agree to the terms of service and privacy policy
-                      </span>
                     </label>
+
                     <br />
                     <input
                       type="submit"
@@ -115,6 +142,7 @@ export default function Register() {
                       style={{ marginTop: "5%" }}
                     />
                   </div>
+                  {error && <div> {error}</div>}
                 </form>
               </div>
             </div>

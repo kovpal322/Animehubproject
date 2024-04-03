@@ -1,4 +1,4 @@
-import Header from "./header";
+import Header from "../components/header.jsx";
 
 export default function Favoriteanimes() {
   return (

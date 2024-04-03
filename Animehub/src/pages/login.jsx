@@ -1,18 +1,37 @@
-import React, { useState } from "react";
-import Header from "./header";
+import { useState } from "react";
+import Header from "../components/header.jsx";
+import { useUserContext } from "../hooks/useUserContext.jsx";
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = (e) => {
+  const [error, setError] = useState(null);
+  const { dispatch } = useUserContext();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted:", username, password);
+
+    const response = await fetch("http://localhost:4000/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      setError(data.error);
+    }
+
+    if (response.ok) {
+      dispatch({ type: "LOGIN_USER", payload: data });
+      localStorage.setItem("user", JSON.stringify(data));
+      window.location.assign("/");
+    }
   };
 
   return (
     <>
       <Header>
-        <a href="/register" className="btn btn-primary">
+        <a href="register" className="btn btn-primary">
           register
         </a>
       </Header>
@@ -32,17 +51,17 @@ export default function Login() {
                   onSubmit={handleSubmit}
                 >
                   <div className="form-group">
-                    <label htmlFor="username" className="text-white">
-                      Username:
+                    <label htmlFor="email" className="text-white">
+                      email
                     </label>
                     <br />
                     <input
-                      type="text"
-                      name="username"
-                      id="username"
+                      type="email"
+                      name="email"
+                      id="email"
                       className="form-control border-0 search"
-                      placeholder="Enter your username"
-                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="Enter your email"
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
@@ -79,6 +98,8 @@ export default function Login() {
                       style={{ marginTop: "3%" }}
                     />
                   </div>
+
+                  {error && <div> {error}</div>}
                 </form>
               </div>
             </div>

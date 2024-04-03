@@ -1,6 +1,7 @@
-import Header from "./header";
+import Header from "../components/header.jsx";
 import axios from "axios";
 import { useEffect, useState } from "react";
+
 
 export default function Animes() {
   const [search, setSearch] = useState("");
@@ -8,6 +9,7 @@ export default function Animes() {
   const [animes, setAnimes] = useState([]);
   const [genres, setgenres] = useState([]);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchAnimes = async () => {
       try {

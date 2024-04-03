@@ -1,21 +1,26 @@
-import { useAnimeContext } from "../hooks/useAnimeContext";
+import { useAnimeContext } from "../hooks/useAnimeContext.jsx";
+import {useUserContext} from "../hooks/useUserContext.jsx";
+import Header from "../components/header.jsx";
 
-import Header from "./header";
+import LogoutButton from "../components/LogoutButton.jsx";
 
 export default function Home() {
   const { animes } = useAnimeContext();
+const {user}=useUserContext()
 
   const randomIndex = Math.floor(Math.random() * animes.length);
 
   return (
     <>
       <Header>
-        <a href="/login" className="btn btn-primary">
-          login
-        </a>
-        <a href="/register" className="btn btn-primary">
-          register
-        </a>
+          {user? <LogoutButton></LogoutButton>:<div>
+            <a href="/login" className="btn btn-primary">
+                login
+            </a>
+            <a href="/register" className="btn btn-primary">
+            register
+            </a>
+            </div>}
       </Header>
       <div className="container">
         <h1>Welcome on Animehub</h1>
@@ -56,7 +61,7 @@ export default function Home() {
                 <div key={card._id} className="col-md-2 col-sm-4 col-6">
                   <div className="card text-center bg-transparent border-0">
                     <div className="card-body animatedcard m-2">
-                      <a className="card-item" href="Animescreen">
+                      <a className="card-item" href={`Animescreen/${card._id}`}>
                         <img
                           src={card.imagepath}
                           className="card-item rounded img-fluid"

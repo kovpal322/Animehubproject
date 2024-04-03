@@ -1,18 +1,21 @@
-import React from "react";
-import Header from "./header";
 
-import { useAnimeContext } from "../hooks/useAnimeContext";
+import Header from "../components/header.jsx";
+import {useUserContext} from "../hooks/useUserContext.jsx";
+import { useAnimeContext } from "../hooks/useAnimeContext.jsx";
 import { useParams } from "react-router-dom";
+import LogoutButton from "../components/LogoutButton.jsx";
 export default function AnimeDetails() {
   const { animes } = useAnimeContext();
-
+const {user}=useUserContext()
   const params = useParams();
 
   const singleAnime = animes.find((anime) => anime._id == params.id);
 
   return (
     <div>
-      <Header></Header>
+      <Header>
+        {user&&<LogoutButton></LogoutButton>}
+      </Header>
       <div className="container" style={{ maxWidth: "50%" }}>
         <section className="sec1">
           <div className="row">

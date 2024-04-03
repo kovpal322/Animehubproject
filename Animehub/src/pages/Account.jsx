@@ -1,9 +1,39 @@
-import React from "react";
-import Header from "./header";
+import { useEffect, useState } from "react";
+import Header from "../components/header.jsx";
+import LogoutButton from "../components/LogoutButton.jsx";
 export default function UserProfile() {
+  const { user, token } = JSON.parse(localStorage.getItem("user"));
+
+  const [error, setError] = useState(null);
+  const [userInfo, setUserInfo] = useState({});
+
+  const getUserInfo = async (id) => {
+    try {
+      const resp = await fetch("http://localhost:4000/getuser/" + id, {
+        headers: { Authorization: "Bearer " + token },
+      });
+      const data = await resp.json();
+
+      if (!resp.ok) {
+        setError("failed to fetch user");
+      }
+
+      if (resp.ok) {
+        console.log();
+        setUserInfo(data);
+      }
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo(user);
+  }, []);
+
   return (
     <div>
-      <Header></Header>
+      <Header>{user && <LogoutButton></LogoutButton>}</Header>
       <div className="container mb-5" style={{ width: "50%" }}>
         <div className="row">
           <div className="col-md-2-6 col-sm-6 d-flex justify-content-center">
@@ -16,7 +46,7 @@ export default function UserProfile() {
           </div>
           <div className="col-md-2-6 col-sm-6 justify-content-center  align-self-center text-center">
             <p>
-              <strong>Username: exampleusername</strong>
+              <strong>Username: {userInfo.username}</strong>
             </p>
           </div>
         </div>
@@ -31,14 +61,14 @@ export default function UserProfile() {
           </a>
 
           <a
-            href="/profilepicture"
+            href="/Animehubproject/Animehub/src/pages/profilepicture"
             className="search rounded mb-2 p-2 w-100 text-center "
           >
             Change Profile Picture text-center
           </a>
 
           <a
-            href="/changeusername"
+            href="/Animehubproject/Animehub/src/pages/changeusername"
             className="search rounded mb-2 p-2 w-100 text-center "
           >
             Change Username

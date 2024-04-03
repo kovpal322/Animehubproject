@@ -1,5 +1,6 @@
 import { useReducer, createContext } from "react";
 import { useState, useLayoutEffect } from "react";
+
 import axios from "axios";
 export const animeContext = createContext();
 export const animeReducer = (state, action) => {
@@ -22,7 +23,9 @@ export const AnimeContextProvider = ({ children }) => {
   useLayoutEffect(() => {
     const fetchAnimes = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/get/animes");
+        const response = await axios.get(
+          "http://localhost:4000/get/animes/?q="
+        );
 
         dispatch({ type: "GET_ANIMES", payload: response.data });
       } catch (err) {
