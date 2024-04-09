@@ -14,7 +14,7 @@ const {user}=useUserContext()
     <>
       <Header>
           {user? <LogoutButton></LogoutButton>:<div>
-            <a href="/login" className="btn btn-primary">
+            <a href="/login" className="btn btn-primary m-2">
                 login
             </a>
             <a href="/register" className="btn btn-primary">

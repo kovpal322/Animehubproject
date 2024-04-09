@@ -85,6 +85,9 @@ export default function UserProfile() {
           <a className="search rounded mb-2 p-2 w-100 text-center ">
             Delete Profile
           </a>
+          <a className="search rounded mb-2 p-2 w-100 text-center " href="Admin">
+            Admin Dashboard
+          </a>
         </div>
       </div>
     </div>
