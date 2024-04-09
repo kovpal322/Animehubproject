@@ -6,7 +6,6 @@ export default function UserProfile() {
 
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState({});
-
   const getUserInfo = async (id) => {
     try {
       const resp = await fetch("http://localhost:4000/getuser/" + id, {
@@ -61,25 +60,10 @@ export default function UserProfile() {
           </a>
 
           <a
-            href="/Animehubproject/Animehub/src/pages/profilepicture"
+            href="/changeprofiledetails"
             className="search rounded mb-2 p-2 w-100 text-center "
           >
-            Change Profile Picture text-center
-          </a>
-
-          <a
-            href="/Animehubproject/Animehub/src/pages/changeusername"
-            className="search rounded mb-2 p-2 w-100 text-center "
-          >
-            Change Username
-          </a>
-
-          <a className="search rounded mb-2 p-2 w-100 text-center ">
-            Change Password
-          </a>
-
-          <a className="search rounded mb-2 p-2 w-100 text-center ">
-            Change Email
+            Change Profile details
           </a>
 
           <a className="search rounded mb-2 p-2 w-100 text-center ">

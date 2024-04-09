@@ -1,12 +1,56 @@
 import { useState } from "react";
 import { useUserContext } from "../hooks/useUserContext";
-const [username, setUsername] = useState("");
-const [password, setPassword] = useState("");
-const [email, setEmail] = useState("");
-const [currentPassword, setCurrentPassword] = useState("");
-const { user } = useUserContext();
-
+import Header from "../components/header";
+import LogoutButton from "../components/LogoutButton";
+import axios from "axios";
 const ChangeProfileDetails = () => {
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const [userDetails, setUserDetails] = useState({
+    username: "",
+    password: "",
+    email: "",
+    currentPassword: "",
+  });
+
+  const { user } = useUserContext();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const resp = await fetch(
+        "http://localhost:4000/update/user/" + user.user,
+        {
+          method: "PATCH",
+          body: JSON.stringify(userDetails),
+
+          headers: {
+            "Content-type": "application/json",
+            Authorization: "Bearer " + user.token,
+          },
+        }
+      );
+      const data = await resp.json();
+
+      if (!resp.ok) {
+        setError(data);
+      }
+
+      if (resp.ok) {
+        setSuccess(data);
+        setError("");
+
+        setUserDetails({
+          username: "",
+          password: "",
+          email: "",
+          currentPassword: "",
+        });
+      }
+    } catch (err) {
+      setError(err);
+    }
+  };
   return (
     <div>
       <div>
@@ -36,8 +80,13 @@ const ChangeProfileDetails = () => {
                         id="email"
                         className="form-control border-0 search"
                         placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={userDetails.email}
+                        onChange={(e) =>
+                          setUserDetails({
+                            ...userDetails,
+                            email: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     <div className="form-group">
@@ -51,8 +100,13 @@ const ChangeProfileDetails = () => {
                         id="new-password"
                         className="form-control border-0 search"
                         placeholder="New Password"
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        value={userDetails.password}
+                        onChange={(e) =>
+                          setUserDetails({
+                            ...userDetails,
+                            password: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     <div className="form-group">
@@ -62,40 +116,53 @@ const ChangeProfileDetails = () => {
                       <br />
                       <input
                         type="password"
-                        name="password"
-                        id="password"
+                        name="current-password"
+                        id="current-password"
                         className="form-control border-0 search"
                         placeholder="Current Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={userDetails.currentPassword}
+                        onChange={(e) =>
+                          setUserDetails({
+                            ...userDetails,
+                            currentPassword: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="password" className="text-white">
+                      <label htmlFor="text" className="text-white">
                         username:
                       </label>
                       <br />
                       <input
-                        type="password"
-                        name="password"
-                        id="password"
+                        type="text"
+                        name="text"
+                        id="text"
                         className="form-control border-0 search"
-                        placeholder="Current Password"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="username"
+                        value={userDetails.username}
+                        onChange={(e) =>
+                          setUserDetails({
+                            ...userDetails,
+                            username: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     <div className="form-group">
-                      <input
-                        type="submit"
-                        name="submit"
-                        className="btn btn-primary form-control"
-                        value="Submit"
-                        style={{ marginTop: "5%" }}
-                      />
+                      <button
+                        onClick={handleSubmit}
+                        className=" btn btn-primary form-control "
+                      >
+                        change
+                      </button>
                     </div>
-                    <button onClick={handleSubmit()}>change</button>
                   </form>
+
+                  {success && (
+                    <div className="alert alert-success">{success}</div>
+                  )}
+                  {error && <div className="alert alert-danger">{error}</div>}
                 </div>
               </div>
             </div>
