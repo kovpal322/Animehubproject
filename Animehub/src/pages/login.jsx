@@ -96,32 +96,33 @@ export default function Login() {
                     <input
                       type="submit"
                       name="submit"
-                      className="btn btn-primary"
+                      className="btn btn-primary mb-3 mt-3"
                       value="submit"
-                      style={{ marginTop: "3%" }}
                     />
                   </div>
 
                   {error && <div> {error}</div>}
                 </form>
-                <button onClick={() => setToggle((prevVal) => !prevVal)}>
-                  forgot password
-                </button>
+                <button className="btn btn-primary" onClick={() => setToggle((prevVal) => !prevVal)}>
+        Forgot Password
+      </button>
 
-                <div style={toggle ? { display: "flex" } : { display: "none" }}>
-                  <div className="overlay">
-                    <form className="reset-email-form">
-                      <h2>reset password</h2>
-                      <input type="email" placeholder="email" />
-                      <button>send email</button>
-                    </form>
-                  </div>
+      {toggle && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <form className="reset-email-form">
+              <h2>Reset Password</h2>
+              <input type="email" placeholder="Email" />
+              <button>Send Email</button>
+            </form>
+          </div>
+        </div>
+      )}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 }
