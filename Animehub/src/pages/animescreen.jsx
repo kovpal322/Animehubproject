@@ -55,6 +55,10 @@ export default function AnimeDetails() {
       console.log(error);
       setError(err);
     }
+    setTimeout(() => {
+      setError(null);
+      setMessage(null);
+    }, 2000);
   };
   return (
     <div>
