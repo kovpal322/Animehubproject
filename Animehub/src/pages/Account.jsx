@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../components/header.jsx";
 import LogoutButton from "../components/LogoutButton.jsx";
+
 export default function UserProfile() {
   const { user, token } = JSON.parse(localStorage.getItem("user"));
 
@@ -53,14 +54,14 @@ export default function UserProfile() {
       <div className="container" style={{ width: "50%" }}>
         <div className="row">
           <a
-            href="/favotiteanimes"
+            href="/favoriteanimes"
             className="search rounded mb-2 p-2 w-100 text-center  "
           >
             Favorite Animes
           </a>
 
           <a
-            href="/changeprofiledetails"
+            href="/changeProfile"
             className="search rounded mb-2 p-2 w-100 text-center "
           >
             Change Profile details
@@ -68,6 +69,12 @@ export default function UserProfile() {
 
           <a className="search rounded mb-2 p-2 w-100 text-center ">
             Delete Profile
+          </a>
+          <a
+            className="search rounded mb-2 p-2 w-100 text-center "
+            href="Admin"
+          >
+            Admin Dashboard
           </a>
         </div>
       </div>

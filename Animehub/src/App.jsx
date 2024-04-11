@@ -2,7 +2,9 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
+import "jquery/dist/jquery.min.js";
 import "./App.css";
+
 import Home from "./pages/home.jsx";
 import Animes from "./pages/animes.jsx";
 import Login from "./pages/login.jsx";
@@ -35,14 +37,14 @@ function App() {
           path="/account"
           element={user ? <UserProfile /> : <Navigate to="/login" />}
         />
+        <Route
+          path="/changeProfile"
+          element={user ? <ChangeProfileDetails /> : <Navigate to="/login" />}
+        />
 
         <Route
           path="/favoriteanimes"
           element={user ? <Favoriteanimes /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/changeprofiledetails"
-          element={user ? <ChangeProfileDetails /> : <Navigate to="/login" />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

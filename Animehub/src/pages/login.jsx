@@ -1,7 +1,10 @@
 import { useState } from "react";
 import Header from "../components/header.jsx";
+import React from "react";
+
 import { useUserContext } from "../hooks/useUserContext.jsx";
 export default function Login() {
+  const [toggle, setToggle] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -101,6 +104,19 @@ export default function Login() {
 
                   {error && <div> {error}</div>}
                 </form>
+                <button onClick={() => setToggle((prevVal) => !prevVal)}>
+                  forgot password
+                </button>
+
+                <div style={toggle ? { display: "flex" } : { display: "none" }}>
+                  <div className="overlay">
+                    <form className="reset-email-form">
+                      <h2>reset password</h2>
+                      <input type="email" placeholder="email" />
+                      <button>send email</button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

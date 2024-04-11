@@ -1,21 +1,64 @@
-
 import Header from "../components/header.jsx";
-import {useUserContext} from "../hooks/useUserContext.jsx";
+import axios from "axios";
 import { useAnimeContext } from "../hooks/useAnimeContext.jsx";
 import { useParams } from "react-router-dom";
 import LogoutButton from "../components/LogoutButton.jsx";
+import { useState, useEffect } from "react";
 export default function AnimeDetails() {
   const { animes } = useAnimeContext();
-const {user}=useUserContext()
+  const [userInfo, setUserInfo] = useState({});
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const { user, token } = JSON.parse(localStorage.getItem("user"));
+
   const params = useParams();
 
   const singleAnime = animes.find((anime) => anime._id == params.id);
 
+  const getUserInfo = async (id) => {
+    try {
+      const resp = await fetch("http://localhost:4000/getuser/" + id, {
+        headers: { Authorization: "Bearer " + token },
+      });
+      const data = await resp.json();
+
+      if (!resp.ok) {
+        setError("failed to fetch user");
+      }
+
+      if (resp.ok) {
+        setUserInfo(data);
+      }
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo(user);
+  }, []);
+
+  const addTofavorites = async (id) => {
+    try {
+      const resp = await axios.patch(
+        `http://localhost:4000/update/favanimes/${id}`,
+        { animeId: singleAnime._id },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      setMessage(resp.data);
+    } catch (err) {
+      console.log(error);
+      setError(err);
+    }
+  };
   return (
     <div>
-      <Header>
-        {user&&<LogoutButton></LogoutButton>}
-      </Header>
+      <Header>{user && <LogoutButton></LogoutButton>}</Header>
       <div className="container" style={{ maxWidth: "50%" }}>
         <section className="sec1">
           <div className="row">
@@ -37,6 +80,14 @@ const {user}=useUserContext()
                 <br />
                 Description:{singleAnime && singleAnime.desc}
               </p>
+              {error && <div className="alert alert-danger">{error}</div>}
+              {message && <div className="alert alert-success">{message}</div>}
+              <button
+                onClick={() => addTofavorites(userInfo._id)}
+                className="btn btn-success"
+              >
+                add to favorite
+              </button>
             </div>
           </div>
         </section>

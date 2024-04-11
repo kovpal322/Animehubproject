@@ -1,7 +1,7 @@
 const animeSchema = require("../models/animemodel");
-const studioSchema = require("../models/studiomodel");
+const User = require("../models/usermodel");
 const categorySchema = require("../models/categoryModel");
-
+const mongoose = require("mongoose");
 const createHomeAnimes = async (req, res) => {
   try {
     const anime = await animeSchema.create({ ...req.body });
@@ -64,10 +64,33 @@ const getCategories = async (req, res) => {
     res.status(500).json(err);
   }
 };
+const getFavoriteAnimes = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.aggregate([
+      {
+        $match: { _id: new mongoose.Types.ObjectId(id) },
+      },
+      {
+        $lookup: {
+          from: "animes",
+          localField: "favoriteAnimes",
+          foreignField: "_id",
+          as: "favoriteAnimes",
+        },
+      },
+    ]);
+    res.json(user[0].favoriteAnimes);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: err.message });
+  }
+};
 
 module.exports = {
   createHomeAnimes,
   createCategory,
   getAnimes,
   getCategories,
+  getFavoriteAnimes,
 };

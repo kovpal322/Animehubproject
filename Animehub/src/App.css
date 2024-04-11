@@ -136,3 +136,18 @@ h3 {
 .img-thumbnail {
   background-color: #9494c7 !important;
 }
+.reset-email-form {
+  height: 60%;
+  margin: 0, auto;
+  width: 60%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #9494c7;
+  border-radius: 20px;
+  -webkit-box-shadow: -14px -16px 15px -5px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -14px -16px 15px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: -14px -16px 15px -5px rgba(0, 0, 0, 0.75);
+}

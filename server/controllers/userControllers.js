@@ -1,5 +1,6 @@
+const usermodel = require("../models/usermodel");
 const User = require("../models/usermodel");
-const validator = require("validator");
+
 const jsonwebtoken = require("jsonwebtoken");
 require("dotenv").config();
 const validTo = 3 * 60 * 60 * 24;
@@ -8,6 +9,7 @@ const createToken = (id) => {
     expiresIn: validTo,
   });
 };
+
 const login_user = async (req, res) => {
   const { password, email } = req.body;
   try {
@@ -29,7 +31,7 @@ const signup_user = async (req, res) => {
 
     res.status(200).json({ user: user._id, token });
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
 
     res.status(400).json({ error: err.message });
   }
@@ -47,12 +49,74 @@ const getUser = async (req, res) => {
 
 const changeUserDetails = async (req, res) => {
   const { id } = req.params;
-  const { email, password, username } = req.body;
+  const { email, password, username, currentPassword } = req.body;
+
   try {
-    const user = await User.updateOne(id, {});
-    res.status(200).json(user);
+    const user = await User.updateDetails(
+      password,
+      email,
+      username,
+      currentPassword,
+      id
+    );
+    res.status(200).json({ success: "user updated successfully", user });
   } catch (err) {
+    res.status(500).json(err.message);
+    console.log(err);
+  }
+};
+
+const updatefavoriteAnimes = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { animeId } = req.body;
+    const response = await User.findOneAndUpdate(
+      { _id: id },
+      {
+        $push: {
+          favoriteAnimes: animeId,
+        },
+      }
+    );
+    console.log(animeId);
+    res.status(200).json("added to favorites");
+  } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 };
-module.exports = { login_user, signup_user, getUser };
+
+const deletefavoriteAnime = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { animeId } = req.body;
+    const response = await User.findOneAndUpdate(
+      { _id: id },
+      {
+        $pull: {
+          favoriteAnimes: animeId,
+        },
+      }
+    );
+
+    res.status(200).json("removed from  favorites");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+};
+
+const forgotPassword = async (req, res) => {};
+
+const getResetPassword = async (req, res) => {};
+
+module.exports = {
+  login_user,
+  signup_user,
+  getUser,
+  changeUserDetails,
+  updatefavoriteAnimes,
+  deletefavoriteAnime,
+  forgotPassword,
+  getResetPassword,
+};
