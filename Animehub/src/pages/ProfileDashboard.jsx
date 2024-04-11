@@ -100,7 +100,7 @@ function ProfileDashboard() {
                                             <div className="row text-body-secondary">
                                                 <div className="col-6 text-start">
                                                     <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                                        Add Anime
+                                                        Add Profile
                                                     </button>
                                                 </div>
                                             </div>
