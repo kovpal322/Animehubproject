@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Header from "../components/header.jsx";
 import { useUserContext } from "../hooks/useUserContext.jsx";
+import Google from "../img/google-removebg-preview.png";
+import Github from "../img/github.png";
+import Facebook from "../img/facebook.png";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -123,6 +126,22 @@ export default function Register() {
                       onChange={(e) => setconfirmPassword(e.target.value)}
                     />
                   </div>
+
+                  <div className="line">
+                    <p>or</p>
+                    <div className="google">
+                      <img src={Google} alt="google logo" />
+                      <p className="login-google">continue with google</p>
+                    </div>
+                    <div className="github">
+                      <img src={Github} alt="github logo" />
+                      <p className="login-github">Github</p>
+                    </div>
+                    <div className="facebook">
+                      <img src={Facebook} alt=" logo" />
+                      <p className="login-facebook">facebook</p>
+                    </div>
+                  </div>
                   <div className="form-group">
                     <label htmlFor="terms">
                       I agree to the terms of service and privacy policy
@@ -142,8 +161,9 @@ export default function Register() {
                       style={{ marginTop: "5%" }}
                     />
                   </div>
-                  {error && <div> {error}</div>}
                 </form>
+
+                {error && <div> {error}</div>}
               </div>
             </div>
           </div>

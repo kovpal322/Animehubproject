@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Header from "../components/header.jsx";
 import React from "react";
+import Google from "../img/google-removebg-preview.png";
+import Github from "../img/github.png";
+import Facebook from "../img/facebook.png";
 
 import { useUserContext } from "../hooks/useUserContext.jsx";
 export default function Login() {
@@ -81,6 +84,23 @@ export default function Login() {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
+
+                  <div className="line">
+                    <p>or</p>
+                    <div className="google">
+                      <img src={Google} alt="google logo" />
+                      <p className="login-google">continue with google</p>
+                    </div>
+                    <div className="github">
+                      <img src={Github} alt="github logo" />
+                      <p className="login-github">Github</p>
+                    </div>
+                    <div className="facebook">
+                      <img src={Facebook} alt=" logo" />
+                      <p className="login-facebook">facebook</p>
+                    </div>
+                  </div>
+
                   <div className="form-group">
                     <span>
                       <input
@@ -101,22 +121,12 @@ export default function Login() {
                       style={{ marginTop: "3%" }}
                     />
                   </div>
-
-                  {error && <div> {error}</div>}
                 </form>
                 <button onClick={() => setToggle((prevVal) => !prevVal)}>
                   forgot password
                 </button>
 
-                <div style={toggle ? { display: "flex" } : { display: "none" }}>
-                  <div className="overlay">
-                    <form className="reset-email-form">
-                      <h2>reset password</h2>
-                      <input type="email" placeholder="email" />
-                      <button>send email</button>
-                    </form>
-                  </div>
-                </div>
+                {error && <div> {error}</div>}
               </div>
             </div>
           </div>
