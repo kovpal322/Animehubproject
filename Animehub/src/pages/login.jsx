@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/header.jsx";
 import React from "react";
-import Google from "../img/google-removebg-preview.png";
-import Github from "../img/github.png";
-import Facebook from "../img/facebook.png";
+import { jwtDecode } from "jwt-decode";
 
+import axios from "axios";
 import { useUserContext } from "../hooks/useUserContext.jsx";
 export default function Login() {
   const [toggle, setToggle] = useState(false);
@@ -33,6 +32,40 @@ export default function Login() {
       window.location.assign("/");
     }
   };
+  const handleGoogleLogin = (response) => {
+    const responseObj = jwtDecode(response.credential);
+
+    const loginUser = async () => {
+      try {
+        const resp = await axios.post("http://localhost:4000/google/login", {
+          name: responseObj.name,
+          email: responseObj.email,
+          picture: responseObj.picture,
+        });
+
+        dispatch({ type: "LOGIN_USER", payload: resp.data });
+        localStorage.setItem("user", JSON.stringify(resp.data));
+        window.location.assign("/");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    loginUser();
+    console.log(responseObj);
+  };
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "302793200660-9boro66o4bp1ielc82jcvot1h5s85kmc.apps.googleusercontent.com",
+      callback: handleGoogleLogin,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("googleLoginDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+  }, []);
 
   return (
     <>
@@ -87,18 +120,7 @@ export default function Login() {
 
                   <div className="line">
                     <p>or</p>
-                    <div className="google">
-                      <img src={Google} alt="google logo" />
-                      <p className="login-google">continue with google</p>
-                    </div>
-                    <div className="github">
-                      <img src={Github} alt="github logo" />
-                      <p className="login-github">Github</p>
-                    </div>
-                    <div className="facebook">
-                      <img src={Facebook} alt=" logo" />
-                      <p className="login-facebook">facebook</p>
-                    </div>
+                    <div id="googleLoginDiv"></div>
                   </div>
 
                   <div className="form-group">
@@ -121,30 +143,31 @@ export default function Login() {
                     />
                   </div>
                 </form>
-                <button className="btn btn-primary" onClick={() => setToggle((prevVal) => !prevVal)}>
-        Forgot Password
-      </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => setToggle((prevVal) => !prevVal)}
+                >
+                  Forgot Password
+                </button>
 
-<<<<<<< HEAD
                 {error && <div> {error}</div>}
-=======
-      {toggle && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <form className="reset-email-form">
-              <h2>Reset Password</h2>
-              <input type="email" placeholder="Email" />
-              <button>Send Email</button>
-            </form>
-          </div>
-        </div>
-      )}
-                </div>
->>>>>>> fdb246fa20294ff43d1c63335b1aeb031e4f493b
+
+                {toggle && (
+                  <div className="modal-overlay">
+                    <div className="modal-content">
+                      <form className="reset-email-form">
+                        <h2>Reset Password</h2>
+                        <input type="email" placeholder="Email" />
+                        <button className="send-btn">Send Email</button>
+                      </form>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
+      </div>
     </>
   );
 }

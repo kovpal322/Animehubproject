@@ -1,10 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/header.jsx";
 import { useUserContext } from "../hooks/useUserContext.jsx";
-import Google from "../img/google-removebg-preview.png";
-import Github from "../img/github.png";
-import Facebook from "../img/facebook.png";
-
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +11,7 @@ export default function Register() {
   const [checked, setChecked] = useState(false);
   const [confirmPassword, setconfirmPassword] = useState("");
   const { dispatch } = useUserContext();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -47,6 +46,41 @@ export default function Register() {
       setError("you must accept the terms of service and privacy policy");
     }
   };
+
+  const handleGoogleLogin = (response) => {
+    const responseObj = jwtDecode(response.credential);
+
+    const loginUser = async () => {
+      try {
+        const resp = await axios.post("http://localhost:4000/google/login", {
+          name: responseObj.name,
+          email: responseObj.email,
+          picture: responseObj.picture,
+        });
+
+        dispatch({ type: "LOGIN_USER", payload: resp.data });
+        localStorage.setItem("user", JSON.stringify(resp.data));
+        window.location.assign("/");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    loginUser();
+    console.log(responseObj);
+  };
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "302793200660-9boro66o4bp1ielc82jcvot1h5s85kmc.apps.googleusercontent.com",
+      callback: handleGoogleLogin,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("googleLoginDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+  }, []);
 
   return (
     <>
@@ -129,18 +163,7 @@ export default function Register() {
 
                   <div className="line">
                     <p>or</p>
-                    <div className="google">
-                      <img src={Google} alt="google logo" />
-                      <p className="login-google">continue with google</p>
-                    </div>
-                    <div className="github">
-                      <img src={Github} alt="github logo" />
-                      <p className="login-github">Github</p>
-                    </div>
-                    <div className="facebook">
-                      <img src={Facebook} alt=" logo" />
-                      <p className="login-facebook">facebook</p>
-                    </div>
+                    <div id="googleLoginDiv"></div>
                   </div>
                   <div className="form-group">
                     <label htmlFor="terms">

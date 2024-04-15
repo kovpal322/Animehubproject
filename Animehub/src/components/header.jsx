@@ -1,4 +1,32 @@
+import { useState, useEffect } from "react";
+
 const Header = ({ children }) => {
+  const user = JSON.parse(localStorage.getItem("user")) || null;
+  console.log(user);
+  const [userInfo, setUserInfo] = useState();
+  const getUserInfo = async (id) => {
+    try {
+      const resp = await fetch("http://localhost:4000/getuser/" + id, {
+        headers: { Authorization: "Bearer " + user.token },
+      });
+      const data = await resp.json();
+
+      if (!resp.ok) {
+      }
+
+      if (resp.ok) {
+        console.log();
+        setUserInfo(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo(user && user.user);
+  }, []);
+
   return (
     <header>
       <nav
@@ -43,6 +71,10 @@ const Header = ({ children }) => {
                 </a>
               </li>
             </ul>
+            {userInfo && <p>{userInfo.username}</p>}
+            {userInfo && (
+              <img src={userInfo.profilepicture} className="user-image"></img>
+            )}
             {children}
           </div>
         </div>

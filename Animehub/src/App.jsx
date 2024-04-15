@@ -13,13 +13,13 @@ import Animescreen from "./pages/animescreen.jsx";
 import Profilepicture from "./pages/profilepicture.jsx";
 import UserProfile from "./pages/Account.jsx";
 import Favoriteanimes from "./pages/favoriteanime.jsx";
-
 import NotFound from "./pages/notFound.jsx";
 import ChangeProfileDetails from "./pages/changeProfileDetails.jsx";
+import Admindashboard from "./pages/AdminDashboard.jsx";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -45,6 +45,12 @@ function App() {
         <Route
           path="/favoriteanimes"
           element={user ? <Favoriteanimes /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/admindashboard"
+          element={
+            user ? <Admindashboard></Admindashboard> : <Navigate to="/login" />
+          }
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
