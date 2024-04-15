@@ -7,15 +7,10 @@ const animeSchema = new Scheme(
     title: { type: String, required: true },
     desc: { type: String, default: null },
     creation_year: { type: Number, default: null },
-    studio: { type: mongoose.Types.ObjectId, required: true, ref: "studio" },
+    studio: { type: String, required: true },
     homeimage: { type: String, required: true },
     imagepath: { type: String, required: true },
-    categories: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "category",
-      },
-    ],
+    categories: { type: Array, required: true },
   },
   { timestamps: true }
 );

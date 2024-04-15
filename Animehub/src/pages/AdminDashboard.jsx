@@ -1,8 +1,38 @@
 import "../admin.css";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 function Admindashboard() {
   const expand = () => {
     document.querySelector("#sidebar").classList.toggle("expand");
   };
+
+  const { user, token } = JSON.parse(localStorage.getItem("user"));
+
+  const [error, setError] = useState("");
+  const [userInfo, setUserInfo] = useState({});
+  const getUserInfo = async (id) => {
+    try {
+      const resp = await fetch("http://localhost:4000/getuser/" + id, {
+        headers: { Authorization: "Bearer " + token },
+      });
+      const data = await resp.json();
+
+      if (!resp.ok) {
+        setError("failed to fetch user");
+      }
+
+      if (resp.ok) {
+        console.log();
+        setUserInfo(data);
+      }
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo(user);
+  }, []);
   return (
     <div className="wrapper">
       <aside id="sidebar">
@@ -10,29 +40,26 @@ function Admindashboard() {
           <button className="toggle-btn" type="button">
             <i onClick={expand} className="lni lni-grid-alt"></i>
           </button>
-          <div className="sidebar-logo">
-            <a href="#">Animehub Admin</a>
-          </div>
         </div>
         <ul className="sidebar-nav">
           <li className="sidebar-item">
-            <a href="Profiledashboard" className="sidebar-link">
+            <Link to="/Profiledashboard" className="sidebar-link">
               <i className="lni lni-user"></i>
               <span>Profiles</span>
-            </a>
+            </Link>
           </li>
           <li className="sidebar-item">
-            <a href="Animesdashboard" className="sidebar-link">
+            <Link to="/Animesdashboard" className="sidebar-link">
               <i className="lni lni-agenda"></i>
               <span>Animes</span>
-            </a>
+            </Link>
           </li>
         </ul>
         <div className="sidebar-footer">
-          <a href="/" className="sidebar-link">
+          <Link to="/" className="sidebar-link">
             <i className="lni lni-exit"></i>
             <span>Back to Animehub</span>
-          </a>
+          </Link>
         </div>
       </aside>
       <div className="main">
@@ -61,7 +88,7 @@ function Admindashboard() {
           <div className="container-fluid">
             <div className="mb-3">
               <h3 className="fw-bold fs-2 my-3 text-center text-black">
-                Welcome user
+                welcome {userInfo.username}
               </h3>
               <h3 className="fw-bold fs-4 mb-3 text-black">
                 Choose what you want
@@ -73,9 +100,9 @@ function Admindashboard() {
                     <p className="card-text">
                       You can manage the accounts in the website
                     </p>
-                    <a href="Profiledashboard" className="btn btn-primary">
+                    <Link to="/Profiledashboard" className="btn btn-primary">
                       Go to Profiles
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="card m-3" style={{ width: "18rem" }}>
@@ -84,9 +111,9 @@ function Admindashboard() {
                     <p className="card-text">
                       You can manage the animes on the website
                     </p>
-                    <a href="Animesdashboard" className="btn btn-primary">
+                    <Link to="/Animesdashboard" className="btn btn-primary">
                       Go to Animes
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

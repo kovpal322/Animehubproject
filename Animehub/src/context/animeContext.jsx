@@ -7,11 +7,19 @@ export const animeReducer = (state, action) => {
   switch (action.type) {
     case "GET_ANIMES":
       return { animes: action.payload };
+    case "DELETE_ANIME":
+      return {
+        animes: state.animes.filter((anime) => anime._id !== action.payload),
+      };
 
     case "FILTER_ANIMES":
       return { filteredAnimes: [...action.payload] };
+
+    case "UPLOAD_ANIMES":
+      return { animes: [...state.animes, action.payload] };
   }
 };
+
 export const AnimeContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(animeReducer, {
     animes: [],

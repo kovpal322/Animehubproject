@@ -2,7 +2,6 @@ import Header from "../components/header.jsx";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-
 export default function Animes() {
   const [search, setSearch] = useState("");
   const [newAnimes, setNewAnimes] = useState([]);
@@ -29,9 +28,7 @@ export default function Animes() {
   const filtrerByGenres = async (value) => {
     console.log(newAnimes);
     setNewAnimes(
-      animes.filter((anime) =>
-        anime.categories.some((item) => Object.values(item).indexOf(value) > -1)
-      )
+      animes.filter((anime) => anime.categories.some((item) => item === value))
     );
   };
 

@@ -4,7 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "jquery/dist/jquery.min.js";
 import "./App.css";
-
+import { useEffect, useState } from "react";
 import Home from "./pages/home.jsx";
 import Animes from "./pages/animes.jsx";
 import Login from "./pages/login.jsx";
@@ -16,9 +16,43 @@ import Favoriteanimes from "./pages/favoriteanime.jsx";
 import NotFound from "./pages/notFound.jsx";
 import ChangeProfileDetails from "./pages/changeProfileDetails.jsx";
 import Admindashboard from "./pages/AdminDashboard.jsx";
+import AnimeDashboard from "./pages/AnimeDashboard.jsx";
+import ProfileDashboard from "./pages/ProfileDashboard.jsx";
 
 function App() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const userObj = JSON.parse(localStorage.getItem("user"));
+  let token;
+  let user;
+  if (userObj) {
+    token = userObj.token;
+    user = userObj.user;
+  }
+  console.log(token, user);
+  const [error, setError] = useState(null);
+  const [userInfo, setUserInfo] = useState({});
+  const getUserInfo = async (id) => {
+    try {
+      const resp = await fetch("http://localhost:4000/getuser/" + id, {
+        headers: { Authorization: "Bearer " + token },
+      });
+      const data = await resp.json();
+
+      if (!resp.ok) {
+        setError("failed to fetch user");
+      }
+
+      if (resp.ok) {
+        console.log();
+        setUserInfo(data);
+      }
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo(user);
+  }, []);
 
   return (
     <BrowserRouter>
@@ -38,6 +72,16 @@ function App() {
           element={user ? <UserProfile /> : <Navigate to="/login" />}
         />
         <Route
+          path="/Animesdashboard"
+          element={userInfo.isAdmin ? <AnimeDashboard /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/Profiledashboard"
+          element={
+            userInfo.isAdmin ? <ProfileDashboard /> : <Navigate to="/" />
+          }
+        />
+        <Route
           path="/changeProfile"
           element={user ? <ChangeProfileDetails /> : <Navigate to="/login" />}
         />
@@ -48,9 +92,7 @@ function App() {
         />
         <Route
           path="/admindashboard"
-          element={
-            user ? <Admindashboard></Admindashboard> : <Navigate to="/login" />
-          }
+          element={userInfo.isAdmin ? <Admindashboard /> : <Navigate to="/ " />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

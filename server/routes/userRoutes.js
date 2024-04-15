@@ -9,6 +9,7 @@ const {
   forgotPassword,
   deleteProfile,
   google_signup_user,
+  getAllUsers,
 } = require("../controllers/userControllers");
 const route = express.Router();
 const { requireAuth } = require("../middleware/requireAuth");
@@ -23,4 +24,5 @@ route.get("/reset-password/:id/:token");
 route.post("/forgot/password", forgotPassword);
 route.post("/google/login", google_signup_user);
 route.delete("/user/delete/:id", requireAuth, deleteProfile);
+route.get("/get/users", requireAuth, getAllUsers);
 module.exports = route;

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import Header from "../components/header.jsx";
 import LogoutButton from "../components/LogoutButton.jsx";
 import axios from "axios";
+
 import { Link } from "react-router-dom";
+
 import { useUserContext } from "../hooks/useUserContext.jsx";
 export default function UserProfile() {
   const { user, token } = JSON.parse(localStorage.getItem("user"));
@@ -94,12 +96,14 @@ export default function UserProfile() {
           >
             Delete Profile
           </a>
-          <Link
-            className="search rounded mb-2 p-2 w-100 text-center "
-            to="/admindashboard"
-          >
-            Admin Dashboard
-          </Link>
+          {userInfo.isAdmin && (
+            <Link
+              className="search rounded mb-2 p-2 w-100 text-center "
+              to="/admindashboard"
+            >
+              Admin Dashboard
+            </Link>
+          )}
         </div>
       </div>
       {error && <div className="alert alert-danger">{error.message}</div>}
