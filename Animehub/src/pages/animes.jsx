@@ -68,7 +68,7 @@ export default function Animes() {
           {genres.map((genre, index) => (
             <div key={index} className="col-md-2 col-sm-4 col-4">
               <button
-                className="category mr-3 mb-2  py-2"
+                className="category mr-3 mb-2 py-2"
                 onClick={() => filtrerByGenres(genre.name)}
               >
                 {genre.name}
