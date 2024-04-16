@@ -4,6 +4,7 @@ import { useAnimeContext } from "../hooks/useAnimeContext";
 import axios from "axios";
 import { useState } from "react";
 function AnimeDashboard() {
+  
   const expand = () => {
     document.querySelector("#sidebar").classList.toggle("expand");
   };

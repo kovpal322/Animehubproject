@@ -28,19 +28,19 @@
     ></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        var bodyStyle = {};
+    var bodyStyle = {};
 
-        switch (window.location.pathname) {
-          case "/Admin":
-          case "/Profiledashboard":
-          case "/Animesdashboard":
+    switch (window.location.pathname) {
+        case "admindashboard":
+        case "Profiledashboard":
+        case "Animesdashboard":
             bodyStyle.paddingTop = "0%";
             bodyStyle.backgroundColor = "transparent";
             bodyStyle.fontFamily = "'Poppins', sans-serif";
             break;
-        }
-        Object.assign(document.body.style, bodyStyle);
-      });
+    }
+    Object.assign(document.body.style, bodyStyle);
+});
     </script>
   </body>
 </html>

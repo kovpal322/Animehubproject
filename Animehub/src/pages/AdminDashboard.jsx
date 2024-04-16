@@ -2,6 +2,25 @@ import "../admin.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 function Admindashboard() {
+  useEffect(() => {
+    const bodyStyle = {
+      paddingTop: '0%',
+      backgroundColor: 'transparent',
+      fontFamily: "'Poppins', sans-serif"
+    };
+
+    Object.assign(document.body.style, bodyStyle);
+
+    return () => {
+      const defaultStyle = {
+        paddingTop: '0%',
+      backgroundColor: 'transparent',
+      fontFamily: "'Poppins', sans-serif"
+      };
+      Object.assign(document.body.style, defaultStyle);
+    };
+  }, []);
+
   const expand = () => {
     document.querySelector("#sidebar").classList.toggle("expand");
   };

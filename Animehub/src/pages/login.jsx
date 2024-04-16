@@ -151,20 +151,6 @@ export default function Login() {
                 </button>
 
                 {error && <div> {error}</div>}
-<<<<<<< HEAD
-      {toggle && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <form className="reset-email-form">
-              <h2>Reset Password</h2>
-              <input type="email" placeholder="Email" />
-              <button>Send Email</button>
-            </form>
-          </div>
-        </div>
-      )}
-                </div>
-=======
 
                 {toggle && (
                   <div className="modal-overlay">
@@ -177,7 +163,6 @@ export default function Login() {
                     </div>
                   </div>
                 )}
->>>>>>> 7f22955ed84463a7e3f6cb9511f218fe4a5ff5c9
               </div>
             </div>
           </div>
