@@ -125,9 +125,7 @@ export default function Login() {
         Forgot Password
       </button>
 
-<<<<<<< HEAD
                 {error && <div> {error}</div>}
-=======
       {toggle && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -140,7 +138,6 @@ export default function Login() {
         </div>
       )}
                 </div>
->>>>>>> fdb246fa20294ff43d1c63335b1aeb031e4f493b
               </div>
             </div>
           </div>
