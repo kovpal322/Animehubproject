@@ -6,11 +6,12 @@ const animeRoutes = require("./routes/animeRoutes");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
+const commentRoutes = require("./routes/commentsRoutes");
 app.use(cors());
 app.use(express.json());
 app.use(userRoutes);
 app.use(animeRoutes);
-
+app.use(commentRoutes);
 mongoose
   .connect(process.env.CONNECTION_STRING)
   .then(() => {

@@ -1,15 +1,19 @@
 import Header from "../components/header.jsx";
 import axios from "axios";
 import { useAnimeContext } from "../hooks/useAnimeContext.jsx";
-import { useParams, Navigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import LogoutButton from "../components/LogoutButton.jsx";
 
 import { useState, useEffect } from "react";
+import Postform from "../components/Postform.jsx";
 export default function AnimeDetails() {
   const { animes } = useAnimeContext();
   const [userInfo, setUserInfo] = useState({});
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [comments, setComments] = useState([]);
+  const [pages, setPages] = useState(1);
+  const [showMore, setShowMore] = useState(true);
   const userObj = JSON.parse(localStorage.getItem("user"));
   let token;
   let user;
@@ -67,6 +71,53 @@ export default function AnimeDetails() {
       setMessage(null);
     }, 2000);
   };
+
+  useEffect(() => {
+    const getComments = async () => {
+      try {
+        const resp = await axios.get(
+          `http://localhost:4000/get/comments/${singleAnime._id}/${pages}`
+        );
+        setShowMore(resp.data.showMore);
+        setComments(resp.data.comments);
+        console.log(resp.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    getComments();
+  }, [singleAnime, pages]);
+
+  const postComment = async (comment) => {
+    if (!user) {
+      window.location.assign("/login");
+      return;
+    }
+    if (!comment) {
+      setError("cant post empty comment");
+      return;
+    }
+    const postObj = {
+      userId: userInfo._id,
+      animeId: singleAnime._id,
+      text: comment,
+    };
+    try {
+      const resp = await axios.post(
+        "http://localhost:4000/post/comment",
+        postObj,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      console.log(resp.data);
+      setComments([...comments, resp.data].reverse());
+    } catch (error) {
+      setError("failed to post comment");
+    }
+  };
   return (
     <div>
       <Header>{user && <LogoutButton></LogoutButton>}</Header>
@@ -108,27 +159,35 @@ export default function AnimeDetails() {
         </section>
       </div>
       <div className="container">
-        <h2>Comments</h2>
-        <div className="mt-4">
-          <div className="media">
-            <div className="media-body search rounded p-2 m-2">
-              <h5 className="mt-0">Commenter Name</h5>
-              <p>Comment content goes here...</p>
-              <button className="btn btn-sm btn-primary">Reply</button>
-            </div>
-          </div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="commentContent">Your Comment</label>
-          <textarea
-            className="form-control auto-size"
-            id="commentContent"
-            rows="1"
-            placeholder="Enter your comment"
-          ></textarea>
-        </div>
-        <button className="btn btn-primary">Post Comment</button>
+        {comments && comments.length ? (
+          comments.map((comment) => {
+            return (
+              <div key={comment._id} className="comment-body">
+                <h3>{comment.userInformation[0].username}</h3>
+                <img
+                  src={comment.userInformation[0].profilepicture}
+                  alt="user's profile picture"
+                />
+                <p>{comment.text}</p>
+                <p>{comment.createdAt}</p>
+              </div>
+            );
+          })
+        ) : (
+          <p>no comments yet</p>
+        )}
+
+        {showMore && (
+          <button
+            onClick={() => {
+              setPages((prevValue) => prevValue + 1);
+            }}
+          >
+            show more
+          </button>
+        )}
       </div>
+      <Postform postComment={postComment}></Postform>
     </div>
   );
 }

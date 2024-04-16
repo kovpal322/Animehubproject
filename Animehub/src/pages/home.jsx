@@ -45,8 +45,8 @@ export default function Home() {
                 <br />
                 Genre :
                 {animes.length &&
-                  animes[randomIndex].categories.map((item) => {
-                    return <span key={item._id}> {item.name} </span>;
+                  animes[randomIndex].categories.map((item, index) => {
+                    return <span key={index}> {item} </span>;
                   })}
                 <br />
                 Description : {animes.length && animes[randomIndex].desc}
@@ -57,7 +57,7 @@ export default function Home() {
       </div>
       <div className="container">
         <section className="sec1">
-          <h1 className="mb-5">Anime Series</h1>
+          <h1 className="mb-5">Latest Anime Series</h1>
           <div className="row justify-content-center">
             {animes
               .reverse()
