@@ -39,6 +39,9 @@ const signup_user = async (req, res) => {
 
 const getUser = async (req, res) => {
   const { id } = req.params;
+  if (req.user) {
+    return res.json(user);
+  }
   try {
     const user = await User.findById(id);
     res.status(200).json(user);
@@ -108,7 +111,48 @@ const deletefavoriteAnime = async (req, res) => {
 
 const forgotPassword = async (req, res) => {};
 
-const getResetPassword = async (req, res) => {};
+const google_signup_user = async (req, res) => {
+  const { name, email, picture } = req.body;
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      const token = createToken(user._id);
+      return res.status(200).json({ user: user._id, token });
+    }
+    const newUser = await User.create({
+      username: name,
+      email,
+      profilepicture: picture,
+      isAdmin: false,
+    });
+    const token = createToken(newUser._id);
+    res.status(200).json({ user: newUser._id, token });
+  } catch (err) {
+    console.log(err.message);
+
+    res.status(400).json({ error: err.message });
+  }
+};
+
+const deleteProfile = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await User.findByIdAndDelete(id);
+    res.status(200).json("user deleted");
+  } catch (error) {
+    res.status(500).json("failed to delete profile");
+  }
+};
+
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({ isAdmin: false });
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json("failed to get users");
+  }
+};
 
 module.exports = {
   login_user,
@@ -118,5 +162,7 @@ module.exports = {
   updatefavoriteAnimes,
   deletefavoriteAnime,
   forgotPassword,
-  getResetPassword,
+  deleteProfile,
+  google_signup_user,
+  getAllUsers,
 };

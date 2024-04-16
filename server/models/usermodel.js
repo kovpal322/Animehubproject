@@ -7,8 +7,8 @@ const Scheme = mongoose.Schema;
 const userSchema = new Scheme(
   {
     username: { type: String, required: true },
-    password: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    password: { type: String },
+    email: { type: String, unique: true },
 
     profilepicture: { type: String, default: null },
     favoriteAnimes: [

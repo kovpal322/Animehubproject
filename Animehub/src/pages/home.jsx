@@ -1,26 +1,31 @@
 import { useAnimeContext } from "../hooks/useAnimeContext.jsx";
-import {useUserContext} from "../hooks/useUserContext.jsx";
+import { useUserContext } from "../hooks/useUserContext.jsx";
 import Header from "../components/header.jsx";
-
+import { useEffect } from "react";
 import LogoutButton from "../components/LogoutButton.jsx";
+import axios from "axios";
 
 export default function Home() {
   const { animes } = useAnimeContext();
-const {user}=useUserContext()
+  const { user, dispatch } = useUserContext();
 
   const randomIndex = Math.floor(Math.random() * animes.length);
 
   return (
     <>
       <Header>
-          {user? <LogoutButton></LogoutButton>:<div>
+        {user ? (
+          <LogoutButton></LogoutButton>
+        ) : (
+          <div>
             <a href="/login" className="btn btn-primary m-2">
-                login
+              login
             </a>
             <a href="/register" className="btn btn-primary">
-            register
+              register
             </a>
-            </div>}
+          </div>
+        )}
       </Header>
       <div className="container">
         <h1>Welcome on Animehub</h1>

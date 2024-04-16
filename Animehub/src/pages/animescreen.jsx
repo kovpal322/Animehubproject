@@ -1,15 +1,22 @@
 import Header from "../components/header.jsx";
 import axios from "axios";
 import { useAnimeContext } from "../hooks/useAnimeContext.jsx";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import LogoutButton from "../components/LogoutButton.jsx";
+
 import { useState, useEffect } from "react";
 export default function AnimeDetails() {
   const { animes } = useAnimeContext();
   const [userInfo, setUserInfo] = useState({});
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const { user, token } = JSON.parse(localStorage.getItem("user"));
+  const userObj = JSON.parse(localStorage.getItem("user"));
+  let token;
+  let user;
+  if (userObj) {
+    token = userObj.token;
+    user = userObj.user;
+  }
 
   const params = useParams();
 
@@ -35,7 +42,7 @@ export default function AnimeDetails() {
   };
 
   useEffect(() => {
-    getUserInfo(user);
+    if (user) getUserInfo(user);
   }, []);
 
   const addTofavorites = async (id) => {
@@ -87,7 +94,11 @@ export default function AnimeDetails() {
               {error && <div className="alert alert-danger">{error}</div>}
               {message && <div className="alert alert-success">{message}</div>}
               <button
-                onClick={() => addTofavorites(userInfo._id)}
+                onClick={() =>
+                  user
+                    ? addTofavorites(userInfo._id)
+                    : window.location.assign("/login")
+                }
                 className="btn btn-success"
               >
                 add to favorite

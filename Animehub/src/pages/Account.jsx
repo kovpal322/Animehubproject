@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import Header from "../components/header.jsx";
 import LogoutButton from "../components/LogoutButton.jsx";
+import axios from "axios";
 
+import { Link } from "react-router-dom";
+
+import { useUserContext } from "../hooks/useUserContext.jsx";
 export default function UserProfile() {
   const { user, token } = JSON.parse(localStorage.getItem("user"));
-
+  const { dispatch } = useUserContext();
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState({});
   const getUserInfo = async (id) => {
@@ -31,6 +35,25 @@ export default function UserProfile() {
     getUserInfo(user);
   }, []);
 
+  const deleteAccount = async () => {
+    const sure = window.confirm("are you sure?");
+
+    if (!sure) {
+      return;
+    }
+    try {
+      await axios.delete("http://localhost:4000/user/delete/" + user, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      dispatch({ type: "LOGOUT_USER" });
+      localStorage.removeItem("user");
+      window.location.assign("/");
+    } catch (error) {
+      setError(error);
+    }
+  };
   return (
     <div>
       <Header>{user && <LogoutButton></LogoutButton>}</Header>
@@ -53,12 +76,12 @@ export default function UserProfile() {
       </div>
       <div className="container" style={{ width: "50%" }}>
         <div className="row">
-          <a
-            href="/favoriteanimes"
+          <Link
+            to="/favoriteanimes"
             className="search rounded mb-2 p-2 w-100 text-center  "
           >
             Favorite Animes
-          </a>
+          </Link>
 
           <a
             href="/changeProfile"
@@ -67,17 +90,23 @@ export default function UserProfile() {
             Change Profile details
           </a>
 
-          <a className="search rounded mb-2 p-2 w-100 text-center ">
-            Delete Profile
-          </a>
           <a
             className="search rounded mb-2 p-2 w-100 text-center "
-            href="Admin"
+            onClick={deleteAccount}
           >
-            Admin Dashboard
+            Delete Profile
           </a>
+          {userInfo.isAdmin && (
+            <Link
+              className="search rounded mb-2 p-2 w-100 text-center "
+              to="/admindashboard"
+            >
+              Admin Dashboard
+            </Link>
+          )}
         </div>
       </div>
+      {error && <div className="alert alert-danger">{error.message}</div>}
     </div>
   );
 }

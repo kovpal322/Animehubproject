@@ -24,24 +24,7 @@ const createCategory = async (req, res) => {
 const getAnimes = async (req, res) => {
   const { q } = req.query;
   try {
-    const animes = await animeSchema.aggregate([
-      {
-        $lookup: {
-          from: "studios",
-          localField: "studio",
-          foreignField: "_id",
-          as: "studio",
-        },
-      },
-      {
-        $lookup: {
-          from: "categories",
-          localField: "categories",
-          foreignField: "_id",
-          as: "categories",
-        },
-      },
-    ]);
+    const animes = await animeSchema.find();
 
     res.json(
       q.length > 2
@@ -87,10 +70,34 @@ const getFavoriteAnimes = async (req, res) => {
   }
 };
 
+const deleteAnime = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await animeSchema.findByIdAndDelete(id);
+
+    res.json("anime deleted ");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+const addAnime = async (req, res) => {
+  const { uploadAnimeObj } = req.body;
+  try {
+    const anime = await animeSchema.create(uploadAnimeObj);
+
+    res.json(anime);
+  } catch (err) {
+    res.status(500).json({ error: "failed to upload anime" });
+  }
+};
+
 module.exports = {
   createHomeAnimes,
   createCategory,
   getAnimes,
   getCategories,
   getFavoriteAnimes,
+  deleteAnime,
+  addAnime,
 };
