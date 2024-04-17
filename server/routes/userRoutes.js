@@ -25,4 +25,5 @@ route.post("/forgot/password", forgotPassword);
 route.post("/google/login", google_signup_user);
 route.delete("/user/delete/:id", requireAuth, deleteProfile);
 route.get("/get/users", requireAuth, getAllUsers);
+route.post("/forgot-password", forgotPassword);
 module.exports = route;

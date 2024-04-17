@@ -7,8 +7,11 @@ import axios from "axios";
 import { useUserContext } from "../hooks/useUserContext.jsx";
 export default function Login() {
   const [toggle, setToggle] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
   const [email, setEmail] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState(null);
   const [error, setError] = useState(null);
   const { dispatch } = useUserContext();
   const handleSubmit = async (e) => {
@@ -67,6 +70,27 @@ export default function Login() {
     });
   }, []);
 
+  const sendEmail = async (e) => {
+    console.log("clicked");
+
+    e.currentTarget.disabled = true;
+    e.currentTarget.style.opacity = "0.2";
+    e.currentTarget.style.cursor = "not-allowed";
+    try {
+      const resp = await axios.post("http://localhost:4000/forgot-password", {
+        email: forgotEmail,
+      });
+      if (Object.keys(resp.data).length) setSuccessMessage(resp.data);
+      else setSuccessMessage("");
+      setTimeout(() => {
+        e.target.disabled = false;
+        e.target.style.opacity = "1";
+        e.target.style.cursor = "pointer";
+      }, 10000);
+    } catch (error) {
+      setEmailError("failed to send email");
+    }
+  };
   return (
     <>
       <Header>
@@ -156,9 +180,26 @@ export default function Login() {
                   <div className="modal-overlay">
                     <div className="modal-content">
                       <form className="reset-email-form">
+                        <button className="btn btn-danger ">close</button>
                         <h2>Reset Password</h2>
-                        <input type="email" placeholder="Email" />
-                        <button className="send-btn">Send Email</button>
+                        <input
+                          type="email"
+                          placeholder="Email"
+                          value={forgotEmail}
+                          onChange={(e) => setForgotEmail(e.target.value)}
+                        />
+                        {!emailError && (
+                          <button
+                            className="send-btn"
+                            type="button"
+                            onClick={sendEmail}
+                          >
+                            Send Email
+                          </button>
+                        )}
+
+                        {successMessage && <p>{successMessage}</p>}
+                        {emailError && <p>{emailError}</p>}
                       </form>
                     </div>
                   </div>

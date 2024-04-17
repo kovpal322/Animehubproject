@@ -81,8 +81,8 @@ h3 {
   color: #9494c7 !important;
   border-radius: 5px;
   word-wrap: break-word;
-      white-space: -moz-pre-wrap;
-      white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: pre-wrap;
 }
 @media screen and (max-width: 576px) {
   .categorysection {
@@ -90,7 +90,7 @@ h3 {
   }
   .category {
     width: 100px;
-}
+  }
 }
 @media screen and (max-width: 1200px) {
   .categorysection {
@@ -108,8 +108,7 @@ h3 {
   }
   .category {
     width: 100px !important;
-}
-
+  }
 }
 @media screen and (min-width: 989px) and (max-width: 1200px) {
   .categorysection {
@@ -117,8 +116,7 @@ h3 {
   }
   .category {
     width: 120px;
-}
-
+  }
 }
 @media screen and (min-width: 1200px) {
   .categorysection {
@@ -126,8 +124,7 @@ h3 {
   }
   .category {
     width: 120px;
-}
-
+  }
 }
 
 .animatedcard::before {
@@ -307,7 +304,7 @@ h3 {
   width: 100%;
   border-radius: 20px;
 }
-.comment-body h3{
+.comment-body h3 {
   font-size: 1rem !important;
   margin: 0% !important;
   padding: 0% !important;
@@ -322,7 +319,7 @@ h3 {
 .custom-toggler-icon {
   color: white !important;
 }
-.profilepic{
+.profilepic {
   width: 300px;
   height: 300px;
 }
