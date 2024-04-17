@@ -71,9 +71,9 @@ const Header = ({ children }) => {
                 </a>
               </li>
             </ul>
-            {userInfo && <p>{userInfo.username}</p>}
+            {userInfo && <p className="m-3">{userInfo.username}</p>}
             {userInfo && (
-              <img src={userInfo.profilepicture} className="user-image"></img>
+              <img  src={userInfo.profilepicture} className="user-image"></img>
             )}
             {children}
           </div>

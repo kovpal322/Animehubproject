@@ -61,8 +61,8 @@ export default function UserProfile() {
         <div className="row">
           <div className="col-md-2-6 col-sm-6 d-flex justify-content-center">
             <img
-              src="shop3.png"
-              className="img-fluid rounded-circle mb-2"
+              src={userInfo.profilepicture}
+              className="img-fluid rounded-circle mb-2 profilepic"
               alt="profilkep"
               style={{ maxHeight: "300px" }}
             />
@@ -93,6 +93,7 @@ export default function UserProfile() {
           <a
             className="search rounded mb-2 p-2 w-100 text-center "
             onClick={deleteAccount}
+            href=""
           >
             Delete Profile
           </a>

@@ -78,27 +78,28 @@ export default function Animes() {
         </div>
       </div>
       <div className="container" style={{ marginTop: "5%" }}>
-        <div className="row justify-content-start">
-          {newAnimes.map((anime, index) => (
-            <div key={index} className="col-md-3 col-sm-4 col-6">
-              <div className="card text-center bg-transparent border-0">
-                <div className="card-body animatedcard m-2">
-                  <a className="card-item" href={"/animescreen/" + anime._id}>
-                    <img
-                      src={anime.imagepath}
-                      className="card-item rounded img-fluid"
-                      alt="Card Image"
-                    />
-                  </a>
-                  <h5 className="card-title text-white mt-3 card-item">
-                    {anime.title}
-                  </h5>
-                </div>
-              </div>
-            </div>
-          ))}
+  <div className="row justify-content-start">
+    {newAnimes.map((anime, index) => (
+      <div key={index} className="col-md-3 col-sm-4 col-6">
+        <div className="card text-center bg-transparent border-0" style={{ height: "100%" }}>
+          <div className="card-body d-flex flex-column justify-content-between animatedcard m-2" style={{ height: "100%" }}>
+            <a className="card-item" href={"/animescreen/" + anime._id}>
+              <img
+                src={anime.imagepath}
+                className="card-item rounded img-fluid"
+                alt="Card Image"
+              />
+            </a>
+            <h5 className="card-title text-white mt-3 card-item">
+              {anime.title}
+            </h5>
+          </div>
         </div>
       </div>
+    ))}
+  </div>
+</div>
+
     </>
   );
 }
