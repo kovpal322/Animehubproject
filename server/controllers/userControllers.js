@@ -18,7 +18,7 @@ const login_user = async (req, res) => {
       headers: {
         "Project-ID": CHAT_ENGINE_PROJECT_ID,
         "User-Name": username,
-        "User-Secret": secret,
+        "User-Secret": ,
       },
     });
     const token = createToken(user._id);
