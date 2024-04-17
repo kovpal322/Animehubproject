@@ -163,13 +163,12 @@ export default function AnimeDetails() {
           comments.map((comment) => {
             return (
               <div key={comment._id} className="comment-body">
-                <h3>{comment.userInformation[0].username}</h3>
-                <img
+                <h3><img
                   src={comment.userInformation[0].profilepicture}
                   alt="user's profile picture"
-                />
+                />{comment.userInformation[0].username}</h3>
                 <p>{comment.text}</p>
-                <p>{comment.createdAt}</p>
+                <p>{comment.createdAt.split('T')[0]}</p>
               </div>
             );
           })
@@ -178,7 +177,7 @@ export default function AnimeDetails() {
         )}
 
         {showMore && (
-          <button
+          <button className="btn btn-primary mb-4"
             onClick={() => {
               setPages((prevValue) => prevValue + 1);
             }}

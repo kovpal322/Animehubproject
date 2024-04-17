@@ -22,6 +22,13 @@ const login_user = async (req, res) => {
   const { password, email } = req.body;
   try {
     const user = await User.login(email, password);
+    const r = await axios.get("https://api.chatengine.io/users/me/", {
+      headers: {
+        "Project-ID": CHAT_ENGINE_PROJECT_ID,
+        "User-Name": username,
+        "User-Secret": secret,
+      },
+    });
     const token = createToken(user._id);
 
     res.json({ user: user._id, token: token });
@@ -29,12 +36,18 @@ const login_user = async (req, res) => {
     console.log(err);
     res.status(400).json({ error: err.message });
   }
+
 };
 
 const signup_user = async (req, res) => {
   const { password, username, email } = req.body;
   try {
     const user = await User.signup(password, email, username);
+    const r = await axios.post(
+      "https://api.chatengine.io/users/",
+      { username:user.username, secret:user.password, email:user.email, first_name:user.username},
+      { headers: { "Private-Key": process.env.chatPrivate-Key }}
+    );
     const token = createToken(user._id);
 
     res.status(200).json({ user: user._id, token });
@@ -220,3 +233,4 @@ module.exports = {
   google_signup_user,
   getAllUsers,
 };
+

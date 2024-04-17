@@ -47,7 +47,7 @@ const Header = ({ children }) => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon ">hello</span>
+            <span className="lni lni-menu" style={{ color: 'white' }}><a href="./menu-bar.png"></a></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -71,9 +71,9 @@ const Header = ({ children }) => {
                 </a>
               </li>
             </ul>
-            {userInfo && <p>{userInfo.username}</p>}
+            {userInfo && <p className="m-3">{userInfo.username}</p>}
             {userInfo && (
-              <img src={userInfo.profilepicture} className="user-image"></img>
+              <img  src={userInfo.profilepicture} className="user-image"></img>
             )}
             {children}
           </div>

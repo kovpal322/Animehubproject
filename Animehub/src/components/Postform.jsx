@@ -9,10 +9,10 @@ const Postform = (props) => {
   };
 
   return (
-    <form className="mb-3">
+    <form className="mb-3 container">
       <label htmlFor="commentContent">Your Comment</label>
       <textarea
-        className="form-control auto-size"
+        className="form-control auto-size mb-3"
         id="commentContent"
         rows="1"
         placeholder="Enter your comment"

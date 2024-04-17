@@ -44,46 +44,36 @@ export default function Favoriteanimes() {
   return (
     <>
       <Header>
-        <form className="d-flex" role="search">
-          <input
-            className=" rounded me-2 search"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button type="submit" className="btn btn-primary">
-            Browse
-          </button>
-        </form>
       </Header>
       <div className="container" style={{ marginTop: "5%" }}>
         <h1>Your Favorite Animes</h1>
         <div className="row justify-content-start">
-          {favAnimes.map((anime, index) => (
-            <div key={index} className="col-md-2 col-sm-4 col-6">
-              <div className="card text-center bg-transparent border-0">
-                <div className="card-body animatedcard m-2">
-                  <a className="card-item" href={`animescreen/${anime._id}`}>
-                    <img
-                      src={anime.imagepath}
-                      className="card-item rounded img-fluid"
-                      alt="Card Image"
-                    />
-                  </a>
-                  <h5 className="card-title text-white mt-3 card-item">
-                    {anime.title}
-                  </h5>
-                </div>
-                <button
-                  className="btn btn-danger "
-                  onClick={() => removeAnimeFromFavorites(anime._id)}
-                >
-                  remove{" "}
-                </button>
-              </div>
-            </div>
-          ))}
+  {favAnimes.map((anime, index) => (
+    <div key={index} className="col-md-2 col-sm-4 col-6">
+      <div className="card text-center bg-transparent border-0" style={{ height: "100%" }}>
+        <div className="card-body d-flex flex-column justify-content-between animatedcard m-2" style={{ height: "100%" }}>
+          <a className="card-item" href={`animescreen/${anime._id}`}>
+            <img
+              src={anime.imagepath}
+              className="card-item rounded img-fluid"
+              alt="Card Image"
+            />
+          </a>
+          <h5 className="card-title text-white mt-3 card-item">
+            {anime.title}
+          </h5>
         </div>
+        <button
+          className="btn btn-danger "
+          onClick={() => removeAnimeFromFavorites(anime._id)}
+        >
+          remove{" "}
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
       </div>
     </>
   );

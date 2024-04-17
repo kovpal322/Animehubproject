@@ -59,28 +59,28 @@ export default function Home() {
         <section className="sec1">
           <h1 className="mb-5">Latest Anime Series</h1>
           <div className="row justify-content-center">
-            {animes
-              .reverse()
-              .slice(0, 5)
-              .map((card) => (
-                <div key={card._id} className="col-md-2 col-sm-4 col-6">
-                  <div className="card text-center bg-transparent border-0">
-                    <div className="card-body animatedcard m-2">
-                      <a className="card-item" href={`Animescreen/${card._id}`}>
-                        <img
-                          src={card.imagepath}
-                          className="card-item rounded img-fluid"
-                          alt={card.title}
-                        />
-                      </a>
-                      <h5 className="card-item card-title text-white mt-3">
-                        {card.title}
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-              ))}
+  {animes
+    .reverse()
+    .slice(0, 5)
+    .map((card) => (
+      <div key={card._id} className="col-md-2 col-sm-4 col-6">
+        <div className="card text-center bg-transparent border-0" style={{ height: "100%" }}>
+          <div className="card-body d-flex flex-column justify-content-between animatedcard m-2" style={{ height: "100%" }}>
+            <a className="card-item" href={`Animescreen/${card._id}`}>
+              <img
+                src={card.imagepath}
+                className="card-item rounded img-fluid"
+                alt={card.title}
+              />
+            </a>
+            <h5 className="card-item card-title text-white mt-3">
+              {card.title}
+            </h5>
           </div>
+        </div>
+      </div>
+    ))}
+</div>
         </section>
       </div>
     </>
