@@ -311,3 +311,6 @@ h3 {
   height: 32px;
   border-radius: 50%;
 }
+.custom-toggler-icon {
+  color: white !important;
+}
