@@ -1,6 +1,6 @@
 const usermodel = require("../models/usermodel");
 const User = require("../models/usermodel");
-
+const nodeMailer=require('nodemailer')
 const jsonwebtoken = require("jsonwebtoken");
 require("dotenv").config();
 const validTo = 3 * 60 * 60 * 24;
@@ -9,6 +9,14 @@ const createToken = (id) => {
     expiresIn: validTo,
   });
 };
+const transporter=nodeMailer.createTransport({
+  service:"gmail",
+  auth:{
+    user:'ahub7282@gmail.com',
+    pass:'ViktorKA 2004'
+  }
+})
+
 
 const login_user = async (req, res) => {
   const { password, email } = req.body;
@@ -109,7 +117,7 @@ const deletefavoriteAnime = async (req, res) => {
   }
 };
 
-const forgotPassword = async (req, res) => {};
+
 
 const google_signup_user = async (req, res) => {
   const { name, email, picture } = req.body;
@@ -153,6 +161,52 @@ const getAllUsers = async (req, res) => {
     res.status(500).json("failed to get users");
   }
 };
+
+const forgotPassword= async (req,res)=>{
+  const{email}=req.body
+
+  try {
+    const user=await usermodel.findOne{email}
+
+    if(!user){
+      res.json('no such user with this email')
+      return
+    }
+
+    const secret=process.env.SECRET_KEY+user._id
+
+    const payload={
+      email,
+      password:user.password
+    }
+
+    const token=jsonwebtoken.sign(payload,secret,{expiresIn:"10m"})
+
+    const link=`http://localhost:5173/forgot/password${token}/${user._id}`
+    
+
+const emailOptions={
+  from:"ahub7282@gmail.com",
+  to:email,
+  subject:"reset your password",
+  html:`<p>hello ${user.username} here is your link to reset your password <a>${link}</a></p>`
+
+}
+transporter.sendMail(emailOptions, function(error, info){
+  if (error) {
+    res.json(error)
+  } else {
+    res.json('Email sent to your email  '  );
+  }
+});
+  } catch (error) {
+    res.json(error)
+  }
+
+
+
+}
+
 
 module.exports = {
   login_user,
