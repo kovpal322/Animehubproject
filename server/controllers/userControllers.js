@@ -183,7 +183,7 @@ const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
-    const user = await usermodel.findOne({ email });
+    const user = await User.findOne({ email });
 
     if (!user) {
       res.json("no such user with this email");
@@ -205,13 +205,14 @@ const forgotPassword = async (req, res) => {
       from: "ahub7282@gmail.com",
       to: email,
       subject: "reset your password",
-      html: `<p>hello ${user.username} here is your link to reset your password <a>${link}</a></p>`,
+      html: `<h2>Hello ${user.username}</h2>
+      <p> here is your link to reset your password <a href=${link}>click here </a> it expires in 15 minutes</p>`,
     };
     transporter.sendMail(emailOptions, function (error, info) {
       if (error) {
         res.json(error);
       } else {
-        res.json("Email sent to your email  ");
+        res.json("an Email was  sent to your gmail account  ");
       }
     });
   } catch (error) {

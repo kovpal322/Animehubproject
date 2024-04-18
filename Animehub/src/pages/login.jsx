@@ -146,16 +146,6 @@ export default function Login() {
                   </div>
 
                   <div className="form-group">
-                    <span>
-                      <input
-                        id="remember-me"
-                        name="remember-me"
-                        type="checkbox"
-                      />
-                    </span>
-                    <label htmlFor="remember-me" className="text-white">
-                      <span style={{ marginLeft: "10px" }}>Remember me</span>{" "}
-                    </label>
                     <br />
                     <input
                       type="submit"

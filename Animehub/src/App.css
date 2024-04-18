@@ -333,6 +333,7 @@ h3 {
 .ce-message-form-input,
 .ce-message-form,
 .ce-attachment-icon,
+.ce-chat-feed,
 .ce-message-date-text {
   background-color: #121221 !important;
   color: white !important;
@@ -341,7 +342,7 @@ h3 {
 ::-webkit-scrollbar {
   width: 0; /* Remove scrollbar space */
 }
-.ce-message-form-input{
+.ce-message-form-input {
   margin-bottom: 1.5px;
   height: 40px !important;
   border-radius: 20px;
