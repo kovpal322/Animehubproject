@@ -71,22 +71,23 @@ export default function Login() {
   }, []);
 
   const sendEmail = async (e) => {
-    console.log("clicked");
-
-    e.currentTarget.disabled = true;
-    e.currentTarget.style.opacity = "0.2";
-    e.currentTarget.style.cursor = "not-allowed";
     try {
       const resp = await axios.post("http://localhost:4000/forgot-password", {
         email: forgotEmail,
       });
-      if (Object.keys(resp.data).length) setSuccessMessage(resp.data);
-      else setSuccessMessage("");
-      setTimeout(() => {
-        e.target.disabled = false;
-        e.target.style.opacity = "1";
-        e.target.style.cursor = "pointer";
-      }, 10000);
+      if (Object.keys(resp.data).length) {
+        setSuccessMessage(resp.data);
+        e.currentTarget.disabled = true;
+        e.currentTarget.style.opacity = "0.2";
+        e.currentTarget.style.cursor = "not-allowed";
+        setTimeout(() => {
+          e.target.disabled = false;
+          e.target.style.opacity = "1";
+          e.target.style.cursor = "pointer";
+        }, 10000);
+      } else {
+        setSuccessMessage("");
+      }
     } catch (error) {
       setEmailError("failed to send email");
     }
