@@ -19,6 +19,7 @@ import Admindashboard from "./pages/AdminDashboard.jsx";
 import AnimeDashboard from "./pages/AnimeDashboard.jsx";
 import ProfileDashboard from "./pages/ProfileDashboard.jsx";
 import Chat from "./pages/Chat.jsx";
+import Reset from "./pages/passwordreset.jsx"
 
 function App() {
   const userObj = JSON.parse(localStorage.getItem("user"));
@@ -65,6 +66,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/animescreen/:id" element={<Animescreen />} />
+        <Route path="/forgot/password/:token/:user_id" element={<Reset />} />
         <Route
           path="/chat"
           element={
