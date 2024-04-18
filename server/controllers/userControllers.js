@@ -76,7 +76,7 @@ const getUser = async (req, res) => {
 const changeUserDetails = async (req, res) => {
   const { id } = req.params;
   const { email, password, username, currentPassword } = req.body;
-
+  s;
   try {
     const user = await User.updateDetails(
       password,
@@ -226,7 +226,7 @@ const changeProfile = async (req, res) => {
     await User.findByIdAndUpdate({ _id: id }, { profilepicture: picture });
     res.json("uploaded");
   } catch (error) {
-    res.json(error);
+    res.json("failed to upload image");
   }
 };
 

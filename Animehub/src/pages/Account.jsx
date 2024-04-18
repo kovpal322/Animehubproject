@@ -9,6 +9,7 @@ import { useUserContext } from "../hooks/useUserContext.jsx";
 export default function UserProfile() {
   const { user, token } = JSON.parse(localStorage.getItem("user"));
   const [image, setImage] = useState("");
+  const [userImage, setUserImage] = useState("");
   const { dispatch } = useUserContext();
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState({});
@@ -25,6 +26,7 @@ export default function UserProfile() {
 
       if (resp.ok) {
         console.log();
+        setUserImage(data.profilepicture);
         setUserInfo(data);
       }
     } catch (err) {
@@ -34,7 +36,7 @@ export default function UserProfile() {
 
   useEffect(() => {
     getUserInfo(user);
-  }, []);
+  }, [user]);
 
   const changeProfilePicture = async () => {
     const formData = new FormData();
@@ -52,8 +54,9 @@ export default function UserProfile() {
       );
 
       console.log(resp.data);
+      window.location.reload();
     } catch (error) {
-      setError(error);
+      setError("failed to upload profile image");
     }
   };
 
@@ -77,7 +80,8 @@ export default function UserProfile() {
     }
   };
 
-  console.log(userInfo);
+  console.log(userInfo.profilepicture);
+
   return (
     <div>
       <Header>{user && <LogoutButton></LogoutButton>}</Header>
@@ -85,15 +89,14 @@ export default function UserProfile() {
         <div className="row">
           <div className="col-md-2-6 col-sm-6 d-flex justify-content-center">
             <img
-              src={
-                userInfo.length &&
-                userInfo.profilepicture.includes("googleusercontent")
-                  ? userInfo.profilepicture
-                  : `./public/uploads/${userInfo.profilepicture}`
-              }
               className="img-fluid rounded-circle mb-2 profilepic"
               alt="profilkep"
               style={{ maxHeight: "300px" }}
+              src={
+                userImage.includes("googleusercontent")
+                  ? userImage
+                  : "./public/uploads/" + userImage
+              }
             />
             <input
               type="file"
