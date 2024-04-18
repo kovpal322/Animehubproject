@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useUserContext } from "../hooks/useUserContext.jsx";
 export default function UserProfile() {
   const { user, token } = JSON.parse(localStorage.getItem("user"));
+  const [image, setImage] = useState("");
   const { dispatch } = useUserContext();
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState({});
@@ -35,6 +36,27 @@ export default function UserProfile() {
     getUserInfo(user);
   }, []);
 
+  const changeProfilePicture = async () => {
+    const formData = new FormData();
+    formData.append("image", image);
+    try {
+      const resp = await axios.patch(
+        "http://localhost:4000/change-picture/" + user,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      console.log(resp.data);
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   const deleteAccount = async () => {
     const sure = window.confirm("are you sure?");
 
@@ -54,6 +76,8 @@ export default function UserProfile() {
       setError(error);
     }
   };
+
+  console.log(userInfo);
   return (
     <div>
       <Header>{user && <LogoutButton></LogoutButton>}</Header>
@@ -61,12 +85,25 @@ export default function UserProfile() {
         <div className="row">
           <div className="col-md-2-6 col-sm-6 d-flex justify-content-center">
             <img
-              src={userInfo.profilepicture}
+              src={
+                userInfo.length &&
+                userInfo.profilepicture.includes("googleusercontent")
+                  ? userInfo.profilepicture
+                  : `./public/uploads/${userInfo.profilepicture}`
+              }
               className="img-fluid rounded-circle mb-2 profilepic"
               alt="profilkep"
               style={{ maxHeight: "300px" }}
             />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+            <button onClick={changeProfilePicture}>save</button>
           </div>
+
+          {console.log(image)}
           <div className="col-md-2-6 col-sm-6 justify-content-center  align-self-center text-center">
             <p>
               <strong>Username: {userInfo.username}</strong>
@@ -74,8 +111,15 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
+
       <div className="container" style={{ width: "50%" }}>
         <div className="row">
+          <button
+            className="btn btn-secondary "
+            style={{ marginBottom: "20px" }}
+          >
+            <Link to="/chat">chat with users</Link>
+          </button>
           <Link
             to="/favoriteanimes"
             className="search rounded mb-2 p-2 w-100 text-center  "

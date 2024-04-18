@@ -10,7 +10,7 @@ const userSchema = new Scheme(
     password: { type: String },
     email: { type: String, unique: true },
 
-    profilepicture: { type: String, default: null },
+    profilepicture: { type: String, default: "default.png" },
     favoriteAnimes: [
       {
         type: mongoose.Types.ObjectId,

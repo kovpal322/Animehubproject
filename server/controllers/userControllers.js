@@ -1,4 +1,3 @@
-const usermodel = require("../models/usermodel");
 const User = require("../models/usermodel");
 const nodeMailer = require("nodemailer");
 const jsonwebtoken = require("jsonwebtoken");
@@ -220,6 +219,17 @@ const forgotPassword = async (req, res) => {
   }
 };
 
+const changeProfile = async (req, res) => {
+  const { id } = req.params;
+  const picture = req.file.filename;
+  try {
+    await User.findByIdAndUpdate({ _id: id }, { profilepicture: picture });
+    res.json("uploaded");
+  } catch (error) {
+    res.json(error);
+  }
+};
+
 module.exports = {
   login_user,
   signup_user,
@@ -231,4 +241,5 @@ module.exports = {
   deleteProfile,
   google_signup_user,
   getAllUsers,
+  changeProfile,
 };
