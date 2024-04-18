@@ -353,10 +353,28 @@ h3 {
 .ce-member-delete-button {
   background-color: #ba1919 !important;
   color: white !important;
+  font-family: "Poppins", sans-serif !important;
+}
+.ce-their-message-body,
+.ce-chat-card-title,
+.ce-chat-card-subtitle-html {
+  background-color: #242447 !important;
+  color: #9494c7 !important;
+  font-family: "Poppins", sans-serif !important;
+}
+.ce-autocomplete-close{
+  margin-top: 9px;
 }
 
-.ce-autocomplete-input {
-  margin: 10px 5px !important;
+.ce-autocomplete-input,
+.ce-chat-settings-title,
+.ce-add-member-option {
+  font-family: "Poppins", sans-serif !important;
+}
+.ce-autocomplete-input{
+  font-family: "Poppins", sans-serif !important;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
 }
 ::-webkit-scrollbar {
   width: 0; /* Remove scrollbar space */
@@ -369,3 +387,33 @@ h3 {
   margin-left: 1rem;
   font-family: "Poppins", sans-serif !important;
 }
+@media screen and (min-width: 726px) and (max-width: 790px) {
+.ce-default-button,
+.ce-chat-form-button{
+  margin-top: 50px;
+  margin-right: 120px;
+}
+.ce-chat-form{
+  margin-bottom: 50px;
+}
+}
+@media screen and (min-width: 636px) and (max-width: 726px) {
+  .ce-default-button,
+  .ce-chat-form-button{
+    margin-top: 50px;
+    margin-right: 100px;
+  }
+  .ce-chat-form{
+    margin-bottom: 50px;
+  }
+  }
+  @media screen and (min-width: 576px) and (max-width: 636px) {
+    .ce-default-button,
+    .ce-chat-form-button{
+      margin-top: 50px;
+      margin-right: 80px;
+    }
+    .ce-chat-form{
+      margin-bottom: 50px;
+    }
+    }
