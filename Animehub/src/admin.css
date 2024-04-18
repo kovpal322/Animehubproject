@@ -17,8 +17,11 @@ li {
 
 body {
   font-family: "Poppins", sans-serif;
+<<<<<<< HEAD
 
   font-family: "Poppins", sans-serif !important;
+=======
+>>>>>>> 11789fac8d7853a2cc48e4a244386a16c00c8f3e
 }
 
 .wrapper {
