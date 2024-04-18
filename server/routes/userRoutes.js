@@ -23,6 +23,7 @@ const {
   google_signup_user,
   getAllUsers,
   changeProfile,
+  resetPassword,
 } = require("../controllers/userControllers");
 const route = express.Router();
 const { requireAuth } = require("../middleware/requireAuth");
@@ -45,4 +46,5 @@ route.patch(
   requireAuth,
   changeProfile
 );
+route.patch("/reset-password/:user_id", resetPassword);
 module.exports = route;

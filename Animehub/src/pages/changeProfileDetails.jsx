@@ -56,7 +56,7 @@ const ChangeProfileDetails = () => {
       <div>
         <Header>{user && <LogoutButton></LogoutButton>}</Header>
         <div id="login">
-          <h3 className="text-center text-white pt-5">Change Password</h3>
+          <h3 className="text-center text-white pt-5">Change credentials</h3>
           <div className="container">
             <div
               id="login-row"

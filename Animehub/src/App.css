@@ -334,17 +334,38 @@ h3 {
 .ce-message-form,
 .ce-attachment-icon,
 .ce-chat-feed,
+.ce-chat-header-title,
+.ce-chat-form-title,
 .ce-message-date-text {
   background-color: #121221 !important;
   color: white !important;
+  font-family: "Poppins", sans-serif !important;
+}
+.ce-chat-card,
+.ce-active-chat-card,
+.ce-default-button,
+.ce-chat-form-button {
+  background-color: #242447 !important;
+  color: #9494c7;
+  font-family: "Poppins", sans-serif !important;
+}
+.ce-danger-button,
+.ce-member-delete-button {
+  background-color: #ba1919 !important;
+  color: white !important;
 }
 
+.ce-autocomplete-input {
+  margin: 10px 5px !important;
+}
 ::-webkit-scrollbar {
   width: 0; /* Remove scrollbar space */
 }
+
 .ce-message-form-input {
   margin-bottom: 1.5px;
   height: 40px !important;
   border-radius: 20px;
   margin-left: 1rem;
+  font-family: "Poppins", sans-serif !important;
 }

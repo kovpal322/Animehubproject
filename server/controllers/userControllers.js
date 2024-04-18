@@ -2,6 +2,8 @@ const User = require("../models/usermodel");
 const nodeMailer = require("nodemailer");
 const jsonwebtoken = require("jsonwebtoken");
 const axios = require("axios");
+const bcrypt = require("bcrypt");
+const validator = require("validator");
 require("dotenv").config();
 const validTo = 3 * 60 * 60 * 24;
 const createToken = (id) => {
@@ -231,6 +233,29 @@ const changeProfile = async (req, res) => {
   }
 };
 
+const resetPassword = async (req, res) => {
+  const { user_id } = req.params;
+  const { password } = req.body;
+
+  try {
+    if (!validator.isStrongPassword(password)) {
+      res.json("password is not strong enough");
+      return;
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    await User.findByIdAndUpdate(
+      { _id: user_id },
+      { password: hashedPassword }
+    );
+    res.json("password updated ");
+  } catch (error) {
+    console.log(error);
+    res.json(error.message);
+  }
+};
+
 module.exports = {
   login_user,
   signup_user,
@@ -243,4 +268,5 @@ module.exports = {
   google_signup_user,
   getAllUsers,
   changeProfile,
+  resetPassword,
 };

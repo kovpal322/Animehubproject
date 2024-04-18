@@ -1,9 +1,47 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "../components/header.jsx";
 import React from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 export default function Reset() {
   const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const params = useParams();
+  const setNewPassword = async (e) => {
+    e.preventDefault();
+    const { user_id } = params;
+    if (password !== confirmPassword) {
+      setError("passwords does not match");
+      return;
+    }
+
+    if (!password || !confirmPassword) {
+      setError("fill in all the inputs");
+      return;
+    }
+    try {
+      const resp = await axios.patch(
+        "http://localhost:4000/reset-password/" + user_id,
+        { password }
+      );
+      setMessage(resp.data);
+      if (resp.data.includes("password updated")) {
+        setTimeout(() => {
+          window.location.assign("/login");
+        }, 1500);
+      }
+
+      setTimeout(() => {
+        setMessage("");
+        setError("");
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    }
+  };
   return (
     <>
       <Header>
@@ -20,12 +58,7 @@ export default function Reset() {
           >
             <div id="login-column" className="col-md-6">
               <div id="login-box" className="col-md-12">
-                <form
-                  id="login-form"
-                  className="form"
-                  action=""
-                  onSubmit=""
-                >
+                <form id="login-form" className="form" action="" onSubmit="">
                   <div className="form-group">
                     <label htmlFor="password1" className="text-white">
                       Password
@@ -51,7 +84,7 @@ export default function Reset() {
                       id="password2"
                       className="form-control border-0 search"
                       placeholder="Enter your password again"
-                      onChange={(e) => setPassword2(e.target.value)}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                   </div>
 
@@ -61,8 +94,13 @@ export default function Reset() {
                       name="submit"
                       className="btn btn-primary mb-3 mt-3"
                       value="submit"
+                      onClick={setNewPassword}
                     />
                   </div>
+                  {error && <div className="alert alert-danger">{error}</div>}
+                  {message && (
+                    <div className="alert alert-success">{message}</div>
+                  )}
                 </form>
               </div>
             </div>
