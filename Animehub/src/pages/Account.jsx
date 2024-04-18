@@ -95,19 +95,22 @@ export default function UserProfile() {
               alt="profilkep"
               style={{ maxHeight: "300px" }}
             />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setImage(e.target.files[0])}
-            />
-            <button onClick={changeProfilePicture}>save</button>
           </div>
-
           {console.log(image)}
           <div className="col-md-2-6 col-sm-6 justify-content-center  align-self-center text-center">
             <p>
               <strong>Username: {userInfo.username}</strong>
             </p>
+          </div>
+          <div className="profilepicture">
+            <p>Change Profile picture <input
+              type="file"
+              accept="image/*"
+              className="btn btn-primary m-3 search"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+            <button className="btn btn-primary m-3 search" onClick={changeProfilePicture}>save</button></p>
+            
           </div>
         </div>
       </div>
@@ -115,7 +118,7 @@ export default function UserProfile() {
       <div className="container" style={{ width: "50%" }}>
         <div className="row">
           <button
-            className="btn btn-secondary "
+            className="btn btn-secondary search rounded mb-2 p-2 w-100 text-center "
             style={{ marginBottom: "20px" }}
           >
             <Link to="/chat">chat with users</Link>
