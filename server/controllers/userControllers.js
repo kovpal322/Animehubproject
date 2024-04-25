@@ -2,8 +2,11 @@ const User = require("../models/usermodel");
 const nodeMailer = require("nodemailer");
 const jsonwebtoken = require("jsonwebtoken");
 const axios = require("axios");
+const FormData = require('form-data');
+const fs = require('fs');
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+
 require("dotenv").config();
 const validTo = 3 * 60 * 60 * 24;
 const createToken = (id) => {

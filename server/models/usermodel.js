@@ -10,7 +10,7 @@ const userSchema = new Scheme(
     password: { type: String },
     email: { type: String, unique: true },
 
-    profilepicture: { type: String, default: "default.png" },
+    profilepicture: { type: String, default: "https://github.com/kovpal322/animehubimages/blob/main/Profile_pic/4978064.jpg?raw=true" },
     favoriteAnimes: [
       {
         type: mongoose.Types.ObjectId,

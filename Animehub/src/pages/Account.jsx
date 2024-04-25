@@ -95,7 +95,7 @@ export default function UserProfile() {
               src={
                 userImage.includes("googleusercontent")
                   ? userImage
-                  : "./public/uploads/" + userImage
+                  : userImage
               }
             />
           </div>

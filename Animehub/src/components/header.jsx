@@ -30,7 +30,7 @@ const Header = ({ children }) => {
   return (
     <header>
       <nav
-        className="navbar navbar-expand-lg fixed-top"
+        className="navbar navbar-expand-lg"
         style={{ backgroundColor: "#121221" }}
       >
         <div className="container-fluid">
@@ -70,16 +70,20 @@ const Header = ({ children }) => {
                   aria-disabled="true"
                 >
                   Account
+                  
                 </a>
               </li>
+              <li>
+              </li>
             </ul>
+            <div id="google_translate_element"></div> 
             {userInfo && <p className="m-3">{userInfo.username}</p>}
             {userInfo && (
               <img
                 src={
                   userInfo.profilepicture.includes("googleusercontent")
                     ? userInfo.profilepicture
-                    : `./public/uploads/${userInfo.profilepicture}`
+                    : `${userInfo.profilepicture}`
                 }
                 className="user-image"
               ></img>
